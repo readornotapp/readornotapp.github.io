@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>揪讀書 — 找到你的讀書夥伴</title>
+  <style>
+    :root {
+      --indigo: #4f46e5;
+      --indigo-light: #eef2ff;
+      --indigo-mid: #818cf8;
+      --orange: #f97316;
+      --green: #22c55e;
+      --text: #1e1b4b;
+      --sub: #6b7280;
+      --bg: #f8f7ff;
+      --card: #ffffff;
+      --radius: 20px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, "Helvetica Neue", "PingFang TC", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky;
+      top: 0;
+      background: rgba(248, 247, 255, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(79, 70, 229, 0.08);
+      z-index: 100;
+      padding: 0 24px;
+    }
+    .nav-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--indigo);
+      text-decoration: none;
+    }
+    .nav-logo img {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--sub);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 500;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--indigo); }
+
+    /* HERO */
+    .hero {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 80px 24px 60px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--indigo-light);
+      color: var(--indigo);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 20px;
+    }
+    .hero-badge span { font-size: 16px; }
+    .hero h1 {
+      font-size: clamp(36px, 5vw, 52px);
+      font-weight: 800;
+      line-height: 1.2;
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--indigo);
+    }
+    .hero p {
+      font-size: 17px;
+      color: var(--sub);
+      margin-bottom: 32px;
+      max-width: 440px;
+    }
+    .hero-buttons {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .btn-appstore {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #000;
+      color: #fff;
+      border: none;
+      border-radius: 14px;
+      padding: 12px 24px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform .15s, box-shadow .15s;
+      box-shadow: 0 4px 16px rgba(0,0,0,.2);
+    }
+    .btn-appstore:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,.28);
+    }
+    .btn-appstore svg { flex-shrink: 0; }
+    .btn-appstore-text { display: flex; flex-direction: column; line-height: 1.2; }
+    .btn-appstore-sub { font-size: 10px; font-weight: 400; opacity: .8; }
+    .btn-appstore-main { font-size: 16px; font-weight: 700; }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--indigo);
+      border: 2px solid var(--indigo);
+      border-radius: 14px;
+      padding: 12px 26px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background .15s;
+      display: inline-flex;
+      align-items: center;
+    }
+    .btn-secondary:hover { background: var(--indigo-light); }
+
+    /* PHONE MOCKUP */
+    .hero-visual {
+      display: flex;
+      justify-content: center;
+      position: relative;
+    }
+    .phone {
+      width: 240px;
+      background: #1a1a2e;
+      border-radius: 44px;
+      padding: 14px;
+      box-shadow: 0 32px 80px rgba(79,70,229,.2), 0 8px 24px rgba(0,0,0,.15);
+      position: relative;
+    }
+    .phone::before {
+      content: '';
+      display: block;
+      width: 80px;
+      height: 26px;
+      background: #1a1a2e;
+      border-radius: 0 0 18px 18px;
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+    }
+    .phone-screen {
+      background: var(--bg);
+      border-radius: 34px;
+      overflow: hidden;
+      aspect-ratio: 9/19.5;
+      display: flex;
+      flex-direction: column;
+    }
+    .phone-status {
+      background: var(--bg);
+      padding: 14px 18px 4px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text);
+      display: flex;
+      justify-content: space-between;
+    }
+    .phone-content {
+      flex: 1;
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .mock-timer-wrap {
+      position: relative;
+      width: 120px;
+      height: 120px;
+      margin: 0 auto;
+      cursor: pointer;
+    }
+    .mock-timer-svg {
+      position: absolute;
+      top: 0; left: 0;
+      width: 120px; height: 120px;
+      transform: rotate(-90deg);
+    }
+    .mock-timer-track {
+      fill: none;
+      stroke: var(--indigo-light);
+      stroke-width: 8;
+    }
+    .mock-timer-arc {
+      fill: none;
+      stroke: var(--indigo);
+      stroke-width: 8;
+      stroke-linecap: round;
+      stroke-dasharray: 314;
+      stroke-dashoffset: 314;
+      transition: stroke 0.3s;
+    }
+    .mock-timer-inner {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .mock-time { font-size: 20px; font-weight: 800; color: var(--indigo); transition: color .3s; }
+    .mock-label { font-size: 9px; color: var(--sub); transition: color .3s; }
+    .mock-card {
+      background: var(--card);
+      border-radius: 14px;
+      padding: 10px 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.06);
+    }
+    .mock-card-title { font-size: 9px; color: var(--sub); margin-bottom: 6px; }
+    .mock-avatars { display: flex; gap: 4px; }
+    .mock-avatar {
+      width: 28px; height: 28px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 700; color: #fff;
+    }
+    .mock-btn {
+      background: var(--indigo);
+      color: #fff;
+      border-radius: 12px;
+      padding: 10px;
+      text-align: center;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      width: 100%;
+      transition: background .2s;
+    }
+    .mock-btn.paused {
+      background: var(--green);
+    }
+    .floating-card {
+      position: absolute;
+      background: white;
+      border-radius: 16px;
+      padding: 10px 14px;
+      box-shadow: 0 8px 24px rgba(0,0,0,.12);
+      white-space: nowrap;
+    }
+    .float-right { right: -60px; top: 20%; }
+    .float-left { left: -70px; bottom: 25%; }
+    .float-tag { font-size: 12px; font-weight: 600; color: var(--text); }
+    .float-sub { font-size: 11px; color: var(--sub); }
+    .streak-badge {
+      background: linear-gradient(135deg, #f97316, #fb923c);
+      color: white;
+      font-size: 18px;
+      font-weight: 800;
+      padding: 6px 12px;
+      border-radius: 12px;
+    }
+
+    /* SECTION */
+    section {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 60px 24px;
+    }
+    .section-label {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--indigo);
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-size: clamp(26px, 4vw, 38px);
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .section-sub {
+      font-size: 16px;
+      color: var(--sub);
+      max-width: 520px;
+      margin-bottom: 48px;
+    }
+
+    /* FEATURES GRID */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    .feature-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: 0 2px 12px rgba(0,0,0,.05);
+      transition: transform .2s, box-shadow .2s;
+      border: 1px solid rgba(79,70,229,.06);
+    }
+    .feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(79,70,229,.12);
+    }
+    .feature-icon {
+      width: 52px; height: 52px;
+      border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px;
+      margin-bottom: 18px;
+    }
+    .feature-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+    .feature-card p { font-size: 14px; color: var(--sub); line-height: 1.7; }
+
+    /* HOW IT WORKS */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 24px;
+    }
+    .step {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 28px 24px 24px;
+      border: 1px solid rgba(79,70,229,.08);
+    }
+    .step-number {
+      width: 36px; height: 36px;
+      background: var(--indigo);
+      color: #fff;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 15px;
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+    .step h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+    .step p { font-size: 14px; color: var(--sub); line-height: 1.6; }
+
+    /* CTA */
+    .cta-section {
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      border-radius: var(--radius);
+      padding: 60px 40px;
+      text-align: center;
+    }
+    .cta-section h2 {
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 14px;
+    }
+    .cta-section p {
+      font-size: 16px;
+      color: rgba(255,255,255,.8);
+      margin-bottom: 32px;
+    }
+    .btn-white {
+      background: #fff;
+      color: var(--indigo);
+      border: none;
+      border-radius: 14px;
+      padding: 14px 32px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform .15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn-white:hover { transform: translateY(-2px); }
+
+    /* COMING SOON MODAL */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.5);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .25s;
+    }
+    .modal-overlay.show {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .modal {
+      background: white;
+      border-radius: 28px;
+      padding: 40px 36px;
+      text-align: center;
+      max-width: 340px;
+      width: 90%;
+      transform: scale(.92) translateY(12px);
+      transition: transform .25s;
+      box-shadow: 0 32px 80px rgba(0,0,0,.2);
+    }
+    .modal-overlay.show .modal {
+      transform: scale(1) translateY(0);
+    }
+    .modal-icon {
+      font-size: 52px;
+      margin-bottom: 16px;
+      display: block;
+    }
+    .modal h3 {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+    .modal p {
+      font-size: 15px;
+      color: var(--sub);
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+    .modal-close {
+      background: var(--indigo);
+      color: white;
+      border: none;
+      border-radius: 14px;
+      padding: 12px 32px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity .15s;
+    }
+    .modal-close:hover { opacity: .85; }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 32px 24px;
+      color: var(--sub);
+      font-size: 14px;
+      border-top: 1px solid rgba(79,70,229,.08);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 720px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 48px 20px 40px;
+        gap: 40px;
+        text-align: center;
+      }
+      .hero p { margin: 0 auto 32px; }
+      .hero-buttons { justify-content: center; }
+      .hero-visual { order: -1; }
+      .float-right, .float-left { display: none; }
+      .phone { width: 200px; }
+      .nav-links { display: none; }
+      .cta-section { padding: 40px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- COMING SOON MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal">
+    <span class="modal-icon">🚀</span>
+    <h3>即將上線</h3>
+    <p>揪讀書正在審核中，<br/>敬請期待！</p>
+    <button class="modal-close" onclick="closeModalBtn()">好的，期待中</button>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="#">
+      <img src="../read_or_not.png" alt="揪讀書" />
+      揪讀書
+    </a>
+    <ul class="nav-links">
+      <li><a href="#features">功能</a></li>
+      <li><a href="#how">使用方式</a></li>
+      <li><a href="#download" onclick="showModal(); return false;">下載</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <div class="hero-badge"><span>📚</span> 讀書揪團平台</div>
+    <h1>找到你的<br/><em>讀書夥伴</em></h1>
+    <p>揪讀書讓你輕鬆揪人一起讀書、同步計時、群組聊天，讓讀書不再孤單。</p>
+    <div class="hero-buttons">
+      <a href="#" onclick="showModal(); return false;" class="btn-appstore">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+        <div class="btn-appstore-text">
+          <span class="btn-appstore-sub">在 App Store</span>
+          <span class="btn-appstore-main">下載</span>
+        </div>
+      </a>
+      <a href="#features" class="btn-secondary">了解功能</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="phone">
+      <div class="phone-screen">
+        <div class="phone-status">
+          <span>9:41</span><span>●●●</span>
+        </div>
+        <div class="phone-content">
+          <div class="mock-timer-wrap" onclick="toggleTimer()">
+            <svg class="mock-timer-svg" viewBox="0 0 120 120">
+              <circle class="mock-timer-track" cx="60" cy="60" r="50"/>
+              <circle class="mock-timer-arc" id="timerArc" cx="60" cy="60" r="50"/>
+            </svg>
+            <div class="mock-timer-inner">
+              <div class="mock-time" id="timerDisplay">00:00</div>
+              <div class="mock-label" id="timerLabel">讀書中</div>
+            </div>
+          </div>
+          <div class="mock-card">
+            <div class="mock-card-title">一起讀書的夥伴</div>
+            <div class="mock-avatars">
+              <div class="mock-avatar" style="background:#4f46e5">小</div>
+              <div class="mock-avatar" style="background:#f97316">明</div>
+              <div class="mock-avatar" style="background:#22c55e">芸</div>
+              <div class="mock-avatar" style="background:#8b5cf6">君</div>
+            </div>
+          </div>
+          <div class="mock-card">
+            <div class="mock-card-title">多益考試衝刺團</div>
+            <div style="font-size:10px;color:#4f46e5;font-weight:700;">線上讀書中</div>
+          </div>
+          <button class="mock-btn" id="mockBtn" onclick="toggleTimer()">暫停休息</button>
+        </div>
+      </div>
+    </div>
+    <div class="floating-card float-right">
+      <div class="streak-badge">🔥 17</div>
+      <div class="float-sub" style="margin-top:4px;">連續打卡天數</div>
+    </div>
+    <div class="floating-card float-left">
+      <div class="float-tag">✅ 打卡成功</div>
+      <div class="float-sub">今日讀書 2.5 小時</div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="section-label">功能介紹</div>
+  <div class="section-title">讀書，不再一個人</div>
+  <p class="section-sub">從揪團到計時，揪讀書完整覆蓋你的讀書流程。</p>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon" style="background:#eef2ff;">📖</div>
+      <h3>讀書團揪人</h3>
+      <p>建立線上或實體讀書團，設定科目、時間、人數上限，公開或私人皆可。支援地圖距離篩選，找到附近的讀書夥伴。</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon" style="background:#fff7ed;">⏱</div>
+      <h3>同步讀書計時</h3>
+      <p>個人計時器與讀書團同步進行，清楚顯示已進行時間、剩餘時間，休息時自動切換橘色倒計時，累積淨讀書時間。</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon" style="background:#f0fdf4;">💬</div>
+      <h3>群組聊天室</h3>
+      <p>每個讀書團都有專屬聊天室，支援文字、圖片、回覆訊息，讀書中也能保持溝通。</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon" style="background:#fdf4ff;">🔔</div>
+      <h3>Dynamic Island 動態島</h3>
+      <p>讀書計時以 Live Activity 顯示在動態島與通知欄，離開 app 也能隨時掌握讀書進度。</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon" style="background:#fff1f2;">📅</div>
+      <h3>每日打卡 & 連續紀錄</h3>
+      <p>每日打卡記錄讀書狀況，追蹤連續打卡天數與累積時數，可拍照留下讀書時光。</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon" style="background:#eef2ff;">🏆</div>
+      <h3>排行榜 & 出席率</h3>
+      <p>讀書團內排行榜激勵彼此，成員出席率透明公開，讀書認真程度一目了然。</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how" style="background: var(--indigo-light); border-radius: var(--radius); padding: 60px 40px; max-width: 1080px; margin: 0 auto;">
+  <div class="section-label">使用方式</div>
+  <div class="section-title">四步驟開始讀書</div>
+  <p class="section-sub">不到兩分鐘，從下載到開始讀書。</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-number">1</div>
+      <h3>建立帳號</h3>
+      <p>填入名字、科目、考試目標，讓大家更了解你的讀書方向。</p>
+    </div>
+    <div class="step">
+      <div class="step-number">2</div>
+      <h3>搜尋或建立讀書團</h3>
+      <p>依科目、線上/實體、距離篩選讀書團，或自己開一個邀請朋友。</p>
+    </div>
+    <div class="step">
+      <div class="step-number">3</div>
+      <h3>開始讀書計時</h3>
+      <p>輸入今日科目，按下開始。動態島即時顯示，隨時掌握讀書進度。</p>
+    </div>
+    <div class="step">
+      <div class="step-number">4</div>
+      <h3>每日打卡記錄</h3>
+      <p>結束後打卡，累積連續天數，查看個人統計與排行榜。</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="download" style="padding-bottom: 80px;">
+  <div class="cta-section">
+    <h2>準備好讀書了嗎？</h2>
+    <p>加入揪讀書，找到你的讀書夥伴。</p>
+    <a href="#" onclick="showModal(); return false;" class="btn-white">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="#4f46e5"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+      在 App Store 下載
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 揪讀書 ReadOrNot</p>
+</footer>
+
+<script>
+  function showModal() {
+    document.getElementById('modalOverlay').classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModalBtn() {
+    document.getElementById('modalOverlay').classList.remove('show');
+    document.body.style.overflow = '';
+  }
+  function closeModal(e) {
+    if (e.target === document.getElementById('modalOverlay')) {
+      closeModalBtn();
+    }
+  }
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeModalBtn();
+  });
+</script>
+
+<script>
+  let timerSeconds = 0;
+  let paused = false;
+  let interval = null;
+  const circumference = 2 * Math.PI * 50; // 314.16
+
+  function pad(n) { return String(n).padStart(2, '0'); }
+
+  function formatTime(s) {
+    const h = Math.floor(s / 3600);
+    const m = Math.floor((s % 3600) / 60);
+    const sec = s % 60;
+    if (h > 0) return `${h}:${pad(m)}:${pad(sec)}`;
+    return `${pad(m)}:${pad(sec)}`;
+  }
+
+  function updateArc() {
+    const maxSecs = 3600;
+    const progress = Math.min(timerSeconds / maxSecs, 1);
+    const offset = circumference * (1 - progress);
+    document.getElementById('timerArc').style.strokeDashoffset = offset;
+  }
+
+  function tick() {
+    timerSeconds++;
+    document.getElementById('timerDisplay').textContent = formatTime(timerSeconds);
+    updateArc();
+  }
+
+  function toggleTimer() {
+    const btn = document.getElementById('mockBtn');
+    const label = document.getElementById('timerLabel');
+    const arc = document.getElementById('timerArc');
+    const display = document.getElementById('timerDisplay');
+
+    if (!paused) {
+      // pause
+      clearInterval(interval);
+      interval = null;
+      paused = true;
+      btn.textContent = '繼續讀書';
+      btn.classList.add('paused');
+      label.textContent = '休息中';
+      label.style.color = 'var(--orange)';
+      display.style.color = 'var(--orange)';
+      arc.style.stroke = 'var(--orange)';
+    } else {
+      // resume
+      paused = false;
+      btn.textContent = '暫停休息';
+      btn.classList.remove('paused');
+      label.textContent = '讀書中';
+      label.style.color = '';
+      display.style.color = '';
+      arc.style.stroke = '';
+      interval = setInterval(tick, 1000);
+    }
+  }
+
+  // Auto-start
+  interval = setInterval(tick, 1000);
+</script>
+</body>
+</html>
