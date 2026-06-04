@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>聯絡我們 — 揪讀書</title>
+  <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
+  <link rel="shortcut icon" href="/favicon/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="揪讀書" />
+  <link rel="manifest" href="/favicon/site.webmanifest" />
+  <style>
+    :root {
+      --indigo: #4f46e5;
+      --indigo-light: #eef2ff;
+      --indigo-mid: #818cf8;
+      --text: #1e1b4b;
+      --sub: #6b7280;
+      --bg: #f8f7ff;
+      --card: #ffffff;
+      --radius: 20px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, "Helvetica Neue", "PingFang TC", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      background: rgba(248, 247, 255, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(79, 70, 229, 0.08);
+      z-index: 100;
+      padding: 0 24px;
+    }
+    .nav-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--indigo);
+      text-decoration: none;
+    }
+    .nav-logo img {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--sub);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 500;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--indigo); }
+
+    .content {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 60px 24px 80px;
+    }
+
+    .page-header {
+      text-align: center;
+      margin-bottom: 52px;
+    }
+    .page-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--indigo-light);
+      color: var(--indigo);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 20px;
+    }
+    .page-title {
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+    .page-sub {
+      font-size: 16px;
+      color: var(--sub);
+      max-width: 480px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* CONTACT CARDS */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+    .contact-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 28px;
+      border: 1px solid rgba(79, 70, 229, 0.06);
+      box-shadow: 0 2px 12px rgba(0,0,0,.04);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .contact-card-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+    }
+    .contact-card h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .contact-card p {
+      font-size: 14px;
+      color: var(--sub);
+      line-height: 1.6;
+      flex: 1;
+    }
+    .contact-card a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--indigo);
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      margin-top: 4px;
+    }
+    .contact-card a:hover { text-decoration: underline; }
+
+    /* FORM */
+    .form-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 40px;
+      border: 1px solid rgba(79, 70, 229, 0.06);
+      box-shadow: 0 2px 12px rgba(0,0,0,.04);
+    }
+    .form-card h2 {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .form-card .form-sub {
+      font-size: 14px;
+      color: var(--sub);
+      margin-bottom: 28px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      padding: 12px 16px;
+      border: 1.5px solid rgba(79, 70, 229, 0.15);
+      border-radius: 12px;
+      font-size: 15px;
+      font-family: inherit;
+      color: var(--text);
+      background: var(--bg);
+      transition: border-color .2s, box-shadow .2s;
+      outline: none;
+      resize: none;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--indigo);
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: #c4c4d0;
+    }
+    .form-group select {
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 40px;
+      cursor: pointer;
+    }
+
+    .btn-submit {
+      width: 100%;
+      background: var(--indigo);
+      color: #fff;
+      border: none;
+      border-radius: 14px;
+      padding: 14px;
+      font-size: 16px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      transition: transform .15s, box-shadow .15s, opacity .15s;
+      box-shadow: 0 4px 16px rgba(79, 70, 229, .3);
+    }
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(79, 70, 229, .35);
+    }
+    .btn-submit:active { transform: none; opacity: .9; }
+
+    /* SUCCESS STATE */
+    .success-msg {
+      display: none;
+      text-align: center;
+      padding: 32px 0 8px;
+    }
+    .success-msg .success-icon {
+      font-size: 52px;
+      margin-bottom: 16px;
+      display: block;
+    }
+    .success-msg h3 {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .success-msg p {
+      font-size: 15px;
+      color: var(--sub);
+    }
+
+    footer {
+      text-align: center;
+      padding: 32px 24px;
+      color: var(--sub);
+      font-size: 14px;
+      border-top: 1px solid rgba(79,70,229,.08);
+    }
+    footer a {
+      color: var(--indigo);
+      text-decoration: none;
+      margin: 0 8px;
+    }
+    footer a:hover { text-decoration: underline; }
+
+    @media (max-width: 720px) {
+      .nav-links { display: none; }
+      .content { padding: 40px 16px 60px; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .form-card { padding: 28px 20px; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="/">
+      <img src="read_or_not.png" alt="揪讀書" />
+      揪讀書
+    </a>
+    <ul class="nav-links">
+      <li><a href="/#features">功能</a></li>
+      <li><a href="/#how">使用方式</a></li>
+      <li><a href="/#download">下載</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="content">
+  <div class="page-header">
+    <div class="page-badge">💬 聯絡我們</div>
+    <h1 class="page-title">有任何問題嗎？</h1>
+    <p class="page-sub">不管是功能建議、問題回報或帳號相關問題，都歡迎告訴我們。</p>
+  </div>
+
+  <div class="contact-grid">
+    <div class="contact-card">
+      <div class="contact-card-icon" style="background:#eef2ff;">📧</div>
+      <h3>電子郵件</h3>
+      <p>一般問題、合作洽談或帳號相關請求。</p>
+      <a href="mailto:info@read-or-not.com">info@read-or-not.com →</a>
+    </div>
+    <div class="contact-card">
+      <div class="contact-card-icon" style="background:#fff7ed;">🐛</div>
+      <h3>問題回報</h3>
+      <p>發現 Bug 或功能異常？請描述問題與裝置資訊，我們將盡快處理。</p>
+      <a href="mailto:info@read-or-not.com?subject=問題回報">回報問題 →</a>
+    </div>
+    <div class="contact-card">
+      <div class="contact-card-icon" style="background:#f0fdf4;">💡</div>
+      <h3>功能建議</h3>
+      <p>有好主意想讓揪讀書更好用？我們很樂意聽聽你的想法。</p>
+      <a href="mailto:info@read-or-not.com?subject=功能建議">送出建議 →</a>
+    </div>
+    <div class="contact-card">
+      <div class="contact-card-icon" style="background:#fdf4ff;">🗑️</div>
+      <h3>帳號刪除</h3>
+      <p>如需刪除帳號及個人資料，請來信說明，我們將於 7 個工作天內處理。</p>
+      <a href="mailto:info@read-or-not.com?subject=帳號刪除申請">申請刪除 →</a>
+    </div>
+  </div>
+
+  <div class="form-card">
+    <h2>傳送訊息</h2>
+    <p class="form-sub">填寫表單，我們將透過電子郵件回覆您。</p>
+
+    <form id="contactForm" onsubmit="handleSubmit(event)">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="name">姓名</label>
+          <input type="text" id="name" name="name" placeholder="你的名字" required />
+        </div>
+        <div class="form-group">
+          <label for="email">電子郵件</label>
+          <input type="email" id="email" name="email" placeholder="your@email.com" required />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="subject">類型</label>
+        <select id="subject" name="subject" required>
+          <option value="" disabled selected>請選擇問題類型</option>
+          <option value="bug">問題回報</option>
+          <option value="feature">功能建議</option>
+          <option value="account">帳號問題</option>
+          <option value="delete">帳號刪除申請</option>
+          <option value="other">其他</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="message">訊息內容</label>
+        <textarea id="message" name="message" rows="5" placeholder="請描述您的問題或建議..." required></textarea>
+      </div>
+      <button type="submit" class="btn-submit">送出訊息</button>
+    </form>
+
+    <div class="success-msg" id="successMsg">
+      <span class="success-icon">✅</span>
+      <h3>訊息已送出！</h3>
+      <p>感謝您的來信，我們將盡快透過電子郵件回覆您。</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 揪讀書 ReadOrNot &nbsp;·&nbsp; <a href="/">回首頁</a> &nbsp;·&nbsp; <a href="/privacy.html">隱私權政策</a> &nbsp;·&nbsp; <a href="/terms.html">服務條款</a> &nbsp;·&nbsp; <a href="/contact.html">聯絡我們</a></p>
+</footer>
+
+<script>
+  function handleSubmit(e) {
+    e.preventDefault();
+    const form = document.getElementById('contactForm');
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const subject = document.getElementById('subject').value;
+    const message = document.getElementById('message').value;
+
+    const subjectMap = {
+      bug: '問題回報',
+      feature: '功能建議',
+      account: '帳號問題',
+      delete: '帳號刪除申請',
+      other: '其他'
+    };
+
+    const mailtoSubject = encodeURIComponent('[揪讀書] ' + (subjectMap[subject] || subject));
+    const mailtoBody = encodeURIComponent(
+      '姓名：' + name + '\n' +
+      '電子郵件：' + email + '\n\n' +
+      message
+    );
+
+    window.location.href = 'mailto:info@read-or-not.com?subject=' + mailtoSubject + '&body=' + mailtoBody;
+
+    form.style.display = 'none';
+    document.getElementById('successMsg').style.display = 'block';
+  }
+</script>
+
+</body>
+</html>
