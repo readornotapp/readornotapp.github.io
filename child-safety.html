@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>兒童安全標準 — 揪讀書</title>
+  <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
+  <link rel="shortcut icon" href="/favicon/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="揪讀書" />
+  <link rel="manifest" href="/favicon/site.webmanifest" />
+  <style>
+    :root {
+      --indigo: #4f46e5;
+      --indigo-light: #eef2ff;
+      --text: #1e1b4b;
+      --sub: #6b7280;
+      --bg: #f8f7ff;
+      --card: #ffffff;
+      --radius: 20px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, "Helvetica Neue", "PingFang TC", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      background: rgba(248, 247, 255, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(79, 70, 229, 0.08);
+      z-index: 100;
+      padding: 0 24px;
+    }
+    .nav-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--indigo);
+      text-decoration: none;
+    }
+    .nav-logo img {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--sub);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 500;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--indigo); }
+
+    .content {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 60px 24px 80px;
+    }
+
+    .page-title {
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .page-date {
+      font-size: 14px;
+      color: var(--sub);
+      margin-bottom: 12px;
+    }
+    .page-intro {
+      font-size: 15px;
+      color: var(--sub);
+      line-height: 1.8;
+      margin-bottom: 48px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid rgba(79, 70, 229, 0.1);
+    }
+
+    .toc {
+      background: var(--indigo-light);
+      border-radius: 16px;
+      padding: 24px 28px;
+      margin-bottom: 32px;
+    }
+    .toc-title {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--indigo);
+      margin-bottom: 12px;
+    }
+    .toc ol {
+      list-style: none;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px 24px;
+    }
+    .toc ol li a {
+      font-size: 14px;
+      color: var(--indigo);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .toc ol li a:hover { text-decoration: underline; }
+
+    .section {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 32px;
+      margin-bottom: 16px;
+      border: 1px solid rgba(79, 70, 229, 0.06);
+      box-shadow: 0 2px 12px rgba(0,0,0,.04);
+    }
+
+    .section h2 {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(79, 70, 229, 0.08);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section h2 .num {
+      width: 28px;
+      height: 28px;
+      background: var(--indigo);
+      color: #fff;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .section h3 {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--indigo);
+      margin: 20px 0 8px;
+    }
+    .section h3:first-of-type { margin-top: 0; }
+
+    .section p {
+      font-size: 15px;
+      color: var(--sub);
+      line-height: 1.8;
+      margin-bottom: 10px;
+    }
+    .section p:last-child { margin-bottom: 0; }
+
+    .section ul {
+      list-style: none;
+      margin: 6px 0 10px;
+    }
+    .section ul:last-child { margin-bottom: 0; }
+    .section ul li {
+      font-size: 15px;
+      color: var(--sub);
+      line-height: 1.8;
+      padding-left: 18px;
+      position: relative;
+    }
+    .section ul li::before {
+      content: '·';
+      position: absolute;
+      left: 5px;
+      color: var(--indigo);
+      font-weight: 700;
+    }
+
+    .warning-box {
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-top: 16px;
+    }
+    .warning-box p {
+      font-size: 14px;
+      color: #9a3412;
+      margin: 0;
+    }
+
+    .contact-card {
+      background: var(--indigo-light);
+      border-radius: 14px;
+      padding: 20px 24px;
+      margin-top: 16px;
+    }
+    .contact-card p {
+      color: var(--text) !important;
+      margin: 0 !important;
+    }
+    .contact-card a {
+      color: var(--indigo);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .contact-card a:hover { text-decoration: underline; }
+
+    footer {
+      text-align: center;
+      padding: 32px 24px;
+      color: var(--sub);
+      font-size: 14px;
+      border-top: 1px solid rgba(79,70,229,.08);
+    }
+    footer a {
+      color: var(--indigo);
+      text-decoration: none;
+      margin: 0 8px;
+    }
+    footer a:hover { text-decoration: underline; }
+
+    @media (max-width: 720px) {
+      .nav-links { display: none; }
+      .content { padding: 40px 16px 60px; }
+      .section { padding: 24px 20px; }
+      .toc ol { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="/">
+      <img src="read_or_not.png" alt="揪讀書" />
+      揪讀書
+    </a>
+    <ul class="nav-links">
+      <li><a href="/#features">功能</a></li>
+      <li><a href="/#how">使用方式</a></li>
+      <li><a href="/#download">下載</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="content">
+  <h1 class="page-title">兒童安全標準</h1>
+  <p class="page-date">最後更新日期：2026 年 7 月 11 日</p>
+  <p class="page-intro">
+    「揪讀書」（以下簡稱「本服務」）致力於為所有使用者，特別是未成年使用者，提供安全的環境。本頁說明本服務防範兒童性虐待及剝削內容（Child Sexual Abuse and Exploitation, CSAE）的標準、政策遵循情形，以及檢舉與聯絡方式。
+  </p>
+
+  <div class="toc">
+    <div class="toc-title">目錄</div>
+    <ol>
+      <li><a href="#s1">一、我們的承諾</a></li>
+      <li><a href="#s2">二、防範措施</a></li>
+      <li><a href="#s3">三、法律遵循與檢舉主管機關</a></li>
+      <li><a href="#s4">四、使用者檢舉方式</a></li>
+      <li><a href="#s5">五、聯絡窗口</a></li>
+    </ol>
+  </div>
+
+  <div class="section" id="s1">
+    <h2><span class="num">1</span>我們的承諾</h2>
+    <p>本服務對兒童性虐待及剝削內容（CSAM/CSAE）採取零容忍政策。我們禁止任何使用者於本服務中製作、上傳、儲存、分享或散布任何形式的兒童性虐待內容，亦禁止任何形式利用本服務對未成年使用者進行引誘、騷擾或剝削之行為。</p>
+    <p>一經發現違反本政策之行為，本服務將立即移除相關內容、停權或終止違規帳號，並依法向相關主管機關檢舉。</p>
+  </div>
+
+  <div class="section" id="s2">
+    <h2><span class="num">2</span>防範措施</h2>
+    <ul>
+      <li>對使用者上傳之頭像、聊天內容及其他使用者生成內容進行審核與監控機制</li>
+      <li>提供使用者於 App 內檢舉不當內容或行為之功能</li>
+      <li>違規帳號將依情節輕重予以警告、限制功能、停權或永久終止帳號</li>
+      <li>指定專責聯絡窗口，處理兒童安全相關通報與案件</li>
+      <li>定期檢視並更新內容審核政策，以因應新型態風險</li>
+    </ul>
+  </div>
+
+  <div class="section" id="s3">
+    <h2><span class="num">3</span>法律遵循與檢舉主管機關</h2>
+    <p>本服務遵守所有適用之兒童安全相關法律，包含但不限於使用者所在地之地方與國家法規。若發現涉及兒童性虐待或剝削之內容或行為，本服務將向下列主管機關進行檢舉：</p>
+    <ul>
+      <li>台灣：內政部警政署刑事警察局、衛生福利部（113 保護專線）</li>
+      <li>美國：National Center for Missing &amp; Exploited Children（NCMEC，CyberTipline）</li>
+      <li>使用者所在地之其他地方或國家執法機關</li>
+    </ul>
+    <p>如需進一步瞭解各地主管機關之檢舉管道，請洽詢當地警政或兒少保護單位。</p>
+  </div>
+
+  <div class="section" id="s4">
+    <h2><span class="num">4</span>使用者檢舉方式</h2>
+    <p>使用者可透過以下方式檢舉兒童安全相關疑慮：</p>
+    <ul>
+      <li>於 App 內對可疑使用者、訊息或內容使用「檢舉」功能</li>
+      <li>透過電子郵件聯繫本服務之兒童安全聯絡窗口（見下方聯絡資訊）</li>
+    </ul>
+    <div class="warning-box">
+      <p>若您發現任何兒童處於立即危險之中，請立即聯繫當地警方或撥打 113 保護專線，勿僅透過本服務通報。</p>
+    </div>
+  </div>
+
+  <div class="section" id="s5">
+    <h2><span class="num">5</span>聯絡窗口</h2>
+    <p>如您欲通報兒童安全疑慮，或對本服務之 CSAM 防範措施與政策遵循情形有任何疑問，請透過以下方式聯絡我們指定之兒童安全聯絡窗口：</p>
+    <div class="contact-card">
+      <p style="font-weight:700; margin-bottom:6px !important;">揪讀書（Read or Not APP）兒童安全聯絡窗口</p>
+      <p>電子郵件：<a href="mailto:info@read-or-not.com">info@read-or-not.com</a></p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 揪讀書 ReadOrNot &nbsp;·&nbsp; <a href="/">回首頁</a> &nbsp;·&nbsp; <a href="/privacy.html">隱私權政策</a> &nbsp;·&nbsp; <a href="/terms.html">服務條款</a> &nbsp;·&nbsp; <a href="/child-safety.html">兒童安全標準</a> &nbsp;·&nbsp; <a href="/contact.html">聯絡我們</a></p>
+</footer>
+
+</body>
+</html>
