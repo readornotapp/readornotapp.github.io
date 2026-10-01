@@ -1,16 +1,37 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-Hant-TW">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>聯絡我們 — 揪筆記</title>
   <meta name="description" content="揪筆記問題回報、功能建議與帳號刪除申請。" />
+  <link rel="canonical" href="https://read-or-not.com/joinnote/contact.html" />
+  <link rel="alternate" hreflang="zh-Hant-TW" href="https://read-or-not.com/joinnote/contact.html" />
+  <link rel="alternate" hreflang="zh-Hans-CN" href="https://read-or-not.com/joinnote/zh-Hans/contact.html" />
+  <link rel="alternate" hreflang="en" href="https://read-or-not.com/joinnote/en/contact.html" />
+  <link rel="alternate" hreflang="ja" href="https://read-or-not.com/joinnote/ja/contact.html" />
+  <link rel="alternate" hreflang="ko" href="https://read-or-not.com/joinnote/ko/contact.html" />
+  <link rel="alternate" hreflang="x-default" href="https://read-or-not.com/joinnote/contact.html" />
+  <meta property="og:title" content="聯絡我們 — 揪筆記" />
+  <meta property="og:description" content="揪筆記問題回報、功能建議與帳號刪除申請。" />
+  <meta property="og:image" content="https://read-or-not.com/joinnote/icon.png" />
   <link rel="icon" type="image/png" href="/joinnote/icon.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/joinnote/apple-touch-icon.png" />
   <meta name="apple-mobile-web-app-title" content="揪筆記" />
   <meta name="theme-color" content="#F5F2EB" />
   <link rel="stylesheet" href="/joinnote/style.css" />
   <style>
+    .lang{position:relative}
+    .lang summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:6px;font-size:14px;font-weight:600;
+      color:var(--ink);padding:7px 12px;border:1px solid var(--line);border-radius:999px;background:var(--surface)}
+    .lang summary::-webkit-details-marker{display:none}
+    .lang ul{position:absolute;right:0;top:calc(100% + 6px);list-style:none;background:var(--surface);border:1px solid var(--line);
+      border-radius:14px;padding:6px;min-width:140px;box-shadow:0 12px 30px rgba(23,23,31,.12);z-index:200}
+    .lang li a{display:block;padding:8px 12px;border-radius:9px;color:var(--ink);text-decoration:none;font-size:14px}
+    .lang li a:hover,.lang li a[aria-current]{background:var(--paper);color:var(--coral)}
+    .nav-right{display:flex;align-items:center;gap:22px}
+    .lang-note{font-size:13px;color:var(--ink-soft);margin:-28px 0 28px}
+
     .hero-mini { text-align: center; margin-bottom: 36px; }
     .hero-mini .eyebrow { font-size: 14px; font-weight: 700; color: var(--coral); letter-spacing: .04em; }
     .hero-mini h1 { font-family: var(--serif); font-size: clamp(30px, 5vw, 42px); font-weight: 800; margin: 6px 0 8px; }
@@ -65,21 +86,34 @@
     .success h2 { justify-content: center; border: 0; }
 
     @media (max-width: 720px) { .cards { grid-template-columns: 1fr; } }
+  
+    body{font-family:-apple-system, "PingFang TC", "Noto Sans TC", sans-serif}
   </style>
 </head>
 <body>
-
 <nav>
   <div class="nav-inner">
     <a class="nav-logo" href="/joinnote/">
       <img src="/joinnote/icon.png" alt="揪筆記" />
       揪筆記
     </a>
-    <ul class="nav-links">
+    <div class="nav-right">
+      <ul class="nav-links">
       <li><a href="/joinnote/#features">功能</a></li>
       <li><a href="/joinnote/#download">下載</a></li>
       <li><a href="/joinnote/contact.html">聯絡我們</a></li>
-    </ul>
+      </ul>
+      <details class="lang">
+        <summary aria-label="Language">🌐 繁體中文</summary>
+        <ul>
+        <li><a href="/joinnote/contact.html" hreflang="zh-Hant-TW" lang="zh-Hant-TW" onclick="try{localStorage.setItem('jn.lang','zh-Hant')}catch(e){}" aria-current="true">繁體中文</a></li>
+        <li><a href="/joinnote/zh-Hans/contact.html" hreflang="zh-Hans-CN" lang="zh-Hans-CN" onclick="try{localStorage.setItem('jn.lang','zh-Hans')}catch(e){}">简体中文</a></li>
+        <li><a href="/joinnote/en/contact.html" hreflang="en" lang="en" onclick="try{localStorage.setItem('jn.lang','en')}catch(e){}">English</a></li>
+        <li><a href="/joinnote/ja/contact.html" hreflang="ja" lang="ja" onclick="try{localStorage.setItem('jn.lang','ja')}catch(e){}">日本語</a></li>
+        <li><a href="/joinnote/ko/contact.html" hreflang="ko" lang="ko" onclick="try{localStorage.setItem('jn.lang','ko')}catch(e){}">한국어</a></li>
+        </ul>
+      </details>
+    </div>
   </div>
 </nav>
 
@@ -144,6 +178,21 @@
   </div>
 </div>
 
+<script>
+  function pick(value) { document.getElementById('subject').value = value; }
+
+  function send(e) {
+    e.preventDefault();
+    const labels = {"bug": "問題回報", "feature": "功能建議", "account": "帳號問題", "delete": "帳號刪除申請", "safety": "兒童安全通報", "other": "其他"};
+    const v = id => document.getElementById(id).value;
+    const subject = encodeURIComponent('[揪筆記] ' + (labels[v('subject')] || v('subject')));
+    const body = encodeURIComponent('姓名: ' + v('name') + '\n電子郵件: ' + v('email') + '\n\n' + v('message'));
+    window.location.href = 'mailto:info@read-or-not.com?subject=' + subject + '&body=' + body;
+    document.getElementById('form').style.display = 'none';
+    document.getElementById('success').style.display = 'block';
+  }
+</script>
+
 <footer>
   <p>© 2026 揪筆記 JoinNote · 揪讀書團隊</p>
   <p>
@@ -155,21 +204,6 @@
     <a href="/">揪讀書</a>
   </p>
 </footer>
-
-<script>
-  function pick(value) { document.getElementById('subject').value = value; }
-
-  function send(e) {
-    e.preventDefault();
-    const labels = { bug: '問題回報', feature: '功能建議', account: '帳號問題', delete: '帳號刪除申請', safety: '兒童安全通報', other: '其他' };
-    const v = id => document.getElementById(id).value;
-    const subject = encodeURIComponent('[揪筆記] ' + (labels[v('subject')] || v('subject')));
-    const body = encodeURIComponent('姓名：' + v('name') + '\n電子郵件：' + v('email') + '\n\n' + v('message'));
-    window.location.href = 'mailto:info@read-or-not.com?subject=' + subject + '&body=' + body;
-    document.getElementById('form').style.display = 'none';
-    document.getElementById('success').style.display = 'block';
-  }
-</script>
-
+<script>document.addEventListener('click',e=>{const d=document.querySelector('.lang');if(d&&!d.contains(e.target))d.open=false});</script>
 </body>
 </html>

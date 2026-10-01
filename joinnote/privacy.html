@@ -1,29 +1,64 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-Hant-TW">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>隱私權政策 — 揪筆記</title>
   <meta name="description" content="揪筆記如何蒐集、使用與保護您的資料。" />
+  <link rel="canonical" href="https://read-or-not.com/joinnote/privacy.html" />
+  <link rel="alternate" hreflang="zh-Hant-TW" href="https://read-or-not.com/joinnote/privacy.html" />
+  <link rel="alternate" hreflang="zh-Hans-CN" href="https://read-or-not.com/joinnote/zh-Hans/privacy.html" />
+  <link rel="alternate" hreflang="en" href="https://read-or-not.com/joinnote/en/privacy.html" />
+  <link rel="alternate" hreflang="ja" href="https://read-or-not.com/joinnote/ja/privacy.html" />
+  <link rel="alternate" hreflang="ko" href="https://read-or-not.com/joinnote/ko/privacy.html" />
+  <link rel="alternate" hreflang="x-default" href="https://read-or-not.com/joinnote/privacy.html" />
+  <meta property="og:title" content="隱私權政策 — 揪筆記" />
+  <meta property="og:description" content="揪筆記如何蒐集、使用與保護您的資料。" />
+  <meta property="og:image" content="https://read-or-not.com/joinnote/icon.png" />
   <link rel="icon" type="image/png" href="/joinnote/icon.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/joinnote/apple-touch-icon.png" />
   <meta name="apple-mobile-web-app-title" content="揪筆記" />
   <meta name="theme-color" content="#F5F2EB" />
   <link rel="stylesheet" href="/joinnote/style.css" />
+  <style>
+    .lang{position:relative}
+    .lang summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:6px;font-size:14px;font-weight:600;
+      color:var(--ink);padding:7px 12px;border:1px solid var(--line);border-radius:999px;background:var(--surface)}
+    .lang summary::-webkit-details-marker{display:none}
+    .lang ul{position:absolute;right:0;top:calc(100% + 6px);list-style:none;background:var(--surface);border:1px solid var(--line);
+      border-radius:14px;padding:6px;min-width:140px;box-shadow:0 12px 30px rgba(23,23,31,.12);z-index:200}
+    .lang li a{display:block;padding:8px 12px;border-radius:9px;color:var(--ink);text-decoration:none;font-size:14px}
+    .lang li a:hover,.lang li a[aria-current]{background:var(--paper);color:var(--coral)}
+    .nav-right{display:flex;align-items:center;gap:22px}
+    .lang-note{font-size:13px;color:var(--ink-soft);margin:-28px 0 28px}
+
+    body{font-family:-apple-system, "PingFang TC", "Noto Sans TC", sans-serif}
+  </style>
 </head>
 <body>
-
 <nav>
   <div class="nav-inner">
     <a class="nav-logo" href="/joinnote/">
       <img src="/joinnote/icon.png" alt="揪筆記" />
       揪筆記
     </a>
-    <ul class="nav-links">
+    <div class="nav-right">
+      <ul class="nav-links">
       <li><a href="/joinnote/#features">功能</a></li>
       <li><a href="/joinnote/#download">下載</a></li>
       <li><a href="/joinnote/contact.html">聯絡我們</a></li>
-    </ul>
+      </ul>
+      <details class="lang">
+        <summary aria-label="Language">🌐 繁體中文</summary>
+        <ul>
+        <li><a href="/joinnote/privacy.html" hreflang="zh-Hant-TW" lang="zh-Hant-TW" onclick="try{localStorage.setItem('jn.lang','zh-Hant')}catch(e){}" aria-current="true">繁體中文</a></li>
+        <li><a href="/joinnote/zh-Hans/privacy.html" hreflang="zh-Hans-CN" lang="zh-Hans-CN" onclick="try{localStorage.setItem('jn.lang','zh-Hans')}catch(e){}">简体中文</a></li>
+        <li><a href="/joinnote/en/privacy.html" hreflang="en" lang="en" onclick="try{localStorage.setItem('jn.lang','en')}catch(e){}">English</a></li>
+        <li><a href="/joinnote/ja/privacy.html" hreflang="ja" lang="ja" onclick="try{localStorage.setItem('jn.lang','ja')}catch(e){}">日本語</a></li>
+        <li><a href="/joinnote/ko/privacy.html" hreflang="ko" lang="ko" onclick="try{localStorage.setItem('jn.lang','ko')}catch(e){}">한국어</a></li>
+        </ul>
+      </details>
+    </div>
   </div>
 </nav>
 
@@ -105,14 +140,15 @@
   <div class="section" id="s4">
     <h2><span class="num">4</span>在裝置上處理的資料</h2>
     <p>為了讓您能搜尋手寫內容，本服務會在<strong>您的裝置上</strong>辨識手寫筆跡（iOS 使用 Apple Vision，Android 使用 Google ML Kit 數位墨水辨識）。辨識過程不會將筆跡上傳到第三方；Android 首次使用時會從 Google 下載語言模型。辨識出的文字會隨筆記同步，用於搜尋與揪AI 整理。</p>
-    <p>為了加快開啟速度與支援離線使用，筆記、圖片與星圖會快取在您的裝置上（上限約 500 MB），您可在「設定 → 清除快取」隨時清除；尚未同步的離線變更不會被清除。</p>
+    <p>為了加快開啟速度與支援離線使用，筆記、圖片與星圖會快取在您的裝置上（上限約 500 MB），您可在 App 的「我的 → 清除快取」隨時清除；尚未同步的離線變更不會被清除。</p>
   </div>
 
   <div class="section" id="s5">
     <h2><span class="num">5</span>揪AI 功能</h2>
-    <p>揪AI 提供星圖整理（自動把筆記分成星系）、星星圖示繪製與算式求解等功能。當您使用這些功能時，以下內容會傳送至 <strong>Google Gemini API</strong> 處理：</p>
+    <p>揪AI 提供星圖整理（自動把筆記分成星系）、星星圖示繪製、回想卡出題與算式求解等功能。當您使用這些功能時，以下內容會傳送至 <strong>Google Gemini API</strong> 處理：</p>
     <ul>
       <li>筆記標題，以及筆記中的文字與手寫辨識文字的開頭片段（每份筆記約 260 字以內）</li>
+      <li>製作回想卡時，您圈選的那段筆記（文字與手寫辨識文字）</li>
       <li>您為星星輸入的描述，或您要求求解的算式</li>
     </ul>
     <p>我們不會將您的電子郵件、暱稱等帳號資訊傳送給 Gemini。AI 產生的結果僅供參考，可能不正確。若您不希望筆記內容被 AI 處理，請不要使用揪AI 功能；不使用時，筆記內容不會傳送給 AI 服務。</p>
@@ -178,7 +214,7 @@
 
   <div class="section" id="s11">
     <h2><span class="num">11</span>帳號刪除</h2>
-    <p>您可以隨時在揪筆記 App 的「我的 → 刪除帳號」，或揪讀書 App 的帳號設定中刪除帳號；也可以寄信至 <a href="mailto:info@read-or-not.com?subject=%5B揪筆記%5D%20帳號刪除申請">info@read-or-not.com</a> 申請，我們將於 7 個工作天內處理。</p>
+    <p>您可以隨時在揪筆記 App 的「我的 → 刪除帳號」，或揪讀書 App 的帳號設定中刪除帳號；也可以寄信至 <a href="mailto:info@read-or-not.com?subject=%5B%E6%8F%AA%E7%AD%86%E8%A8%98%5D%20%E5%B8%B3%E8%99%9F%E5%88%AA%E9%99%A4%E7%94%B3%E8%AB%8B">info@read-or-not.com</a> 申請，我們將於 7 個工作天內處理。</p>
     <div class="note-box"><p>因為揪筆記與揪讀書共用帳號，刪除帳號會同時刪除兩個 App 的帳號與所有資料，且無法復原。</p></div>
     <p>帳號刪除後，我們會立即永久刪除：</p>
     <ul>
@@ -211,7 +247,6 @@
       <p>電子郵件：<a href="mailto:info@read-or-not.com">info@read-or-not.com</a></p>
     </div>
   </div>
-
 </div>
 
 <footer>
@@ -225,6 +260,6 @@
     <a href="/">揪讀書</a>
   </p>
 </footer>
-
+<script>document.addEventListener('click',e=>{const d=document.querySelector('.lang');if(d&&!d.contains(e.target))d.open=false});</script>
 </body>
 </html>

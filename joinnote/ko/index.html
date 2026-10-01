@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>揪筆記 JoinNote — 탭하면 바로 쓰기</title>
+  <meta name="description" content="揪筆記는 손글씨 노트 앱이에요. 바로 쓰고, 손글씨도 검색하고, 노트는 별자리로 정리돼요. 스터디와 함께 쓰고 揪讀書와 공부 시간을 동기화해요." />
+  <link rel="canonical" href="https://read-or-not.com/joinnote/ko/" />
+  <link rel="alternate" hreflang="zh-Hant-TW" href="https://read-or-not.com/joinnote/" />
+  <link rel="alternate" hreflang="zh-Hans-CN" href="https://read-or-not.com/joinnote/zh-Hans/" />
+  <link rel="alternate" hreflang="en" href="https://read-or-not.com/joinnote/en/" />
+  <link rel="alternate" hreflang="ja" href="https://read-or-not.com/joinnote/ja/" />
+  <link rel="alternate" hreflang="ko" href="https://read-or-not.com/joinnote/ko/" />
+  <link rel="alternate" hreflang="x-default" href="https://read-or-not.com/joinnote/" />
+  <meta property="og:title" content="揪筆記 JoinNote — 탭하면 바로 쓰기" />
+  <meta property="og:description" content="揪筆記는 손글씨 노트 앱이에요. 바로 쓰고, 손글씨도 검색하고, 노트는 별자리로 정리돼요. 스터디와 함께 쓰고 揪讀書와 공부 시간을 동기화해요." />
+  <meta property="og:image" content="https://read-or-not.com/joinnote/icon.png" />
+  <link rel="icon" type="image/png" href="/joinnote/icon.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/joinnote/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="揪筆記" />
+  <meta name="theme-color" content="#F5F2EB" />
+  <link rel="stylesheet" href="/joinnote/style.css" />
+  <style>
+    .lang{position:relative}
+    .lang summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:6px;font-size:14px;font-weight:600;
+      color:var(--ink);padding:7px 12px;border:1px solid var(--line);border-radius:999px;background:var(--surface)}
+    .lang summary::-webkit-details-marker{display:none}
+    .lang ul{position:absolute;right:0;top:calc(100% + 6px);list-style:none;background:var(--surface);border:1px solid var(--line);
+      border-radius:14px;padding:6px;min-width:140px;box-shadow:0 12px 30px rgba(23,23,31,.12);z-index:200}
+    .lang li a{display:block;padding:8px 12px;border-radius:9px;color:var(--ink);text-decoration:none;font-size:14px}
+    .lang li a:hover,.lang li a[aria-current]{background:var(--paper);color:var(--coral)}
+    .nav-right{display:flex;align-items:center;gap:22px}
+    .lang-note{font-size:13px;color:var(--ink-soft);margin:-28px 0 28px}
+
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 0 16px; }
+
+    /* Hero */
+    .hero {
+      display: grid;
+      grid-template-columns: 1.05fr 1fr;
+      gap: 48px;
+      align-items: center;
+      padding: 72px 0 64px;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--coral);
+      letter-spacing: .04em;
+    }
+    .eyebrow .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 0 3px var(--ink); }
+    .hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(40px, 5.4vw, 62px);
+      font-weight: 800;
+      line-height: 1.08;
+      margin: 14px 0 18px;
+      letter-spacing: -.01em;
+    }
+    .hero h1 em { font-style: normal; color: var(--coral); }
+    .hero h1 .nw { white-space: nowrap; }
+    .hero .lead { font-size: 18px; color: var(--ink-soft); line-height: 1.8; max-width: 30em; }
+    .ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 13px 22px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 15px;
+      text-decoration: none;
+      transition: transform .15s, background .15s;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-ink { background: var(--ink); color: #fff; }
+    .btn-ink:hover { background: var(--coral); }
+    .btn-line { color: var(--ink); border: 1.5px solid var(--ink); }
+    .btn svg { width: 18px; height: 18px; fill: currentColor; }
+
+    /* Quick-ink card (as on the Desk) */
+    .art { position: relative; }
+    .quick {
+      background: var(--ink);
+      border-radius: 34px;
+      padding: 30px 30px 34px;
+      color: #fff;
+      aspect-ratio: 1.25;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 24px 60px rgba(23, 23, 31, .18);
+    }
+    .quick svg.squiggle { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .quick .squiggle path { stroke-dasharray: 1400; stroke-dashoffset: 1400; animation: draw 2.4s .3s ease-out forwards; }
+    @keyframes draw { to { stroke-dashoffset: 0; } }
+    @media (prefers-reduced-motion: reduce) { .quick .squiggle path { animation: none; stroke-dashoffset: 0; } }
+    .quick .led { position: absolute; top: 30px; right: 32px; width: 16px; height: 16px; border-radius: 50%; background: var(--lime); }
+    .quick .label { position: absolute; left: 32px; bottom: 30px; }
+    .quick .label b { display: block; font-family: var(--serif); font-size: 40px; line-height: 1.1; }
+    .quick .label span { color: rgba(255, 255, 255, .62); font-size: 16px; }
+    .quick .pen {
+      position: absolute;
+      right: 28px;
+      bottom: 28px;
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      background: var(--coral);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .quick .pen svg { width: 30px; height: 30px; }
+
+    .page {
+      position: absolute;
+      left: -26px;
+      top: -36px;
+      width: 44%;
+      background: var(--surface);
+      border-radius: 18px;
+      padding: 16px 16px 20px;
+      box-shadow: 0 16px 40px rgba(23, 23, 31, .14);
+      transform: rotate(-5deg);
+      background-image: repeating-linear-gradient(to bottom, transparent 0 25px, rgba(23, 23, 31, .08) 25px 26px);
+      background-position: 0 34px;
+    }
+    .page b { font-family: var(--serif); font-size: 14px; display: block; margin-bottom: 8px; }
+    .page .hl { display: inline-block; height: 8px; width: 60%; background: var(--lime); border-radius: 4px; margin-bottom: 10px; }
+    .page svg { width: 100%; height: 70px; display: block; }
+
+    /* Sections */
+    section { padding: 64px 0; }
+    .sec-head { max-width: 640px; margin-bottom: 34px; }
+    .sec-head .eyebrow { margin-bottom: 8px; }
+    .sec-head h2 { font-family: var(--serif); font-size: clamp(30px, 4.6vw, 44px); font-weight: 800; line-height: 1.2; }
+    .sec-head p { color: var(--ink-soft); font-size: 16px; margin-top: 10px; line-height: 1.8; }
+
+    .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .feature {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 24px;
+    }
+    .feature .ic {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 21px;
+      background: var(--paper);
+      margin-bottom: 14px;
+    }
+    .feature h3 { font-family: var(--serif); font-size: 19px; margin-bottom: 6px; }
+    .feature p { color: var(--ink-soft); font-size: 15px; line-height: 1.75; }
+    .feature.dark { background: var(--ink); color: #fff; border-color: var(--ink); }
+    .feature.dark p { color: rgba(255, 255, 255, .66); }
+    .feature.dark .ic { background: rgba(255, 255, 255, .1); }
+    .feature.coral { background: var(--coral); color: #fff; border-color: var(--coral); }
+    .feature.coral p { color: rgba(255, 255, 255, .85); }
+    .feature.coral .ic { background: rgba(255, 255, 255, .18); }
+
+    .pair {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      align-items: stretch;
+    }
+    .pair .panel {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 28px;
+    }
+    .pair .panel h3 { font-family: var(--serif); font-size: 22px; margin-bottom: 8px; }
+    .pair .panel p { color: var(--ink-soft); line-height: 1.8; }
+    .live {
+      margin-top: 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--ink);
+      color: #fff;
+      border-radius: 999px;
+      padding: 10px 16px;
+      font-size: 14px;
+    }
+    .live .pulse { width: 10px; height: 10px; border-radius: 50%; background: var(--lime); animation: pulse 1.6s infinite; }
+    @keyframes pulse { 50% { opacity: .35; } }
+    .live .time { margin-left: auto; font-variant-numeric: tabular-nums; font-weight: 700; }
+    .sky { margin-top: 18px; height: 150px; border-radius: 18px; background: var(--paper); position: relative; overflow: hidden; }
+    .sky i { position: absolute; border-radius: 50%; border: 3px solid #FFFDF8; box-shadow: 0 3px 0 rgba(23, 23, 31, .08); }
+    .sky .blob { border: 0; box-shadow: none; opacity: .5; }
+
+    .download {
+      background: var(--ink);
+      color: #fff;
+      border-radius: 34px;
+      padding: 48px 32px;
+      text-align: center;
+    }
+    .download h2 { font-family: var(--serif); font-size: clamp(30px, 4.6vw, 44px); font-weight: 800; }
+    .download p { color: rgba(255, 255, 255, .66); margin: 10px auto 26px; max-width: 34em; line-height: 1.8; }
+    .stores { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+    .store {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 22px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, .08);
+      border: 1px solid rgba(255, 255, 255, .16);
+      color: #fff;
+      text-decoration: none;
+      text-align: left;
+    }
+    .store svg { width: 24px; height: 24px; fill: #fff; }
+    .store small { display: block; font-size: 11px; color: rgba(255, 255, 255, .6); }
+    .store b { font-size: 16px; }
+    .store.soon { opacity: .7; cursor: default; }
+    .badge { display: inline-block; margin-top: 18px; background: var(--lime); color: var(--ink); font-weight: 700; font-size: 13px; padding: 4px 12px; border-radius: 999px; }
+    .sister { margin-top: 22px; font-size: 14px; color: rgba(255, 255, 255, .6); }
+    .sister a { color: var(--lime); }
+
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; padding-top: 40px; gap: 56px; }
+      .features { grid-template-columns: 1fr 1fr; }
+      .pair { grid-template-columns: 1fr; }
+      .page { left: -8px; }
+    }
+    @media (max-width: 560px) {
+      .features { grid-template-columns: 1fr; }
+      .quick { border-radius: 26px; }
+      .quick .label b { font-size: 32px; }
+      .page { display: none; }
+      .download { padding: 40px 18px; border-radius: 26px; }
+    }
+  
+    body{font-family:-apple-system, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif}
+  </style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="/joinnote/ko/">
+      <img src="/joinnote/icon.png" alt="揪筆記" />
+      揪筆記
+    </a>
+    <div class="nav-right">
+      <ul class="nav-links">
+      <li><a href="#features">기능</a></li>
+      <li><a href="#study">揪讀書와 함께</a></li>
+      <li><a href="#download">다운로드</a></li>
+      <li><a href="/joinnote/ko/contact.html">문의하기</a></li>
+      </ul>
+      <details class="lang">
+        <summary aria-label="Language">🌐 한국어</summary>
+        <ul>
+        <li><a href="/joinnote/" hreflang="zh-Hant-TW" lang="zh-Hant-TW" onclick="try{localStorage.setItem('jn.lang','zh-Hant')}catch(e){}">繁體中文</a></li>
+        <li><a href="/joinnote/zh-Hans/" hreflang="zh-Hans-CN" lang="zh-Hans-CN" onclick="try{localStorage.setItem('jn.lang','zh-Hans')}catch(e){}">简体中文</a></li>
+        <li><a href="/joinnote/en/" hreflang="en" lang="en" onclick="try{localStorage.setItem('jn.lang','en')}catch(e){}">English</a></li>
+        <li><a href="/joinnote/ja/" hreflang="ja" lang="ja" onclick="try{localStorage.setItem('jn.lang','ja')}catch(e){}">日本語</a></li>
+        <li><a href="/joinnote/ko/" hreflang="ko" lang="ko" onclick="try{localStorage.setItem('jn.lang','ko')}catch(e){}" aria-current="true">한국어</a></li>
+        </ul>
+      </details>
+    </div>
+  </div>
+</nav>
+
+
+<div class="wrap">
+  <header class="hero">
+    <div>
+      <span class="eyebrow"><span class="dot"></span>손글씨 노트 · 揪讀書 팀이 만들었어요</span>
+      <h1><span class="nw">탭하면 바로 쓰기,</span><br/><em class="nw">이름은 나중에.</em></h1>
+      <p class="lead">揪筆記는 공부를 위해 만든 손글씨 노트예요. 열자마자 쓰고, 손글씨도 검색돼요. 노트는 저절로 별자리로 모이고, 스터디 친구들과 같은 노트에 함께 쓸 수 있어요.</p>
+      <div class="ctas">
+        <a class="btn btn-ink" href="#download">곧 출시</a>
+        <a class="btn btn-line" href="#features">기능 보기</a>
+      </div>
+    </div>
+
+    <div class="art" aria-hidden="true">
+      <div class="quick">
+        <svg class="squiggle" viewBox="0 0 500 400" preserveAspectRatio="none">
+          <path d="M-10 170 C 80 230, 170 170, 230 110 C 260 80, 300 55, 296 80 C 292 105, 240 130, 232 112 C 226 95, 300 150, 360 140 C 420 130, 470 105, 520 85"
+                fill="none" stroke="#FF5B3A" stroke-width="9" stroke-linecap="round" />
+        </svg>
+        <span class="led"></span>
+        <div class="label"><b>바로 쓰기</b><span>탭하면 바로 시작. 이름은 나중에.</span></div>
+        <div class="pen">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 21 L12 4 L17 21"/><path d="M9 14 h6"/></svg>
+        </div>
+      </div>
+      <div class="page">
+        <b>광합성: 암반응</b>
+        <span class="hl"></span>
+        <svg viewBox="0 0 200 70" fill="none" stroke="#2A2A33" stroke-width="1.6" stroke-linecap="round">
+          <path d="M4 10 q6 -6 12 0 t12 0 q4 -5 9 -1 M44 8 q5 6 10 0 q4 -4 8 2 t10 -2 M84 10 q6 -6 12 0 t10 0"/>
+          <path d="M4 36 q8 -6 14 0 t12 -1 M40 34 q6 6 12 -1 t10 1 q6 -6 10 0 M90 36 q5 -5 10 0 t12 0 q6 -4 10 1"/>
+          <path d="M4 62 q6 -6 12 0 t12 0 M36 60 q6 5 12 -1 t12 1"/>
+          <circle cx="160" cy="44" r="18" stroke="#4A7CF2"/>
+        </svg>
+      </div>
+    </div>
+  </header>
+</div>
+
+<section id="features">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">기능</span>
+      <h2>종이처럼 잘 써지고,<br/>종이보다 잘 찾아요.</h2>
+      <p>수업 필기와 PDF 프린트 필기부터 시험 전 정리까지, 모두 한곳에서.</p>
+    </div>
+    <div class="features">
+      <div class="feature dark">
+        <div class="ic">✍️</div>
+        <h3>바로 쓰기</h3>
+        <p>제목도 템플릿도 필요 없어요. 끝없이 넓어지는 캔버스나 페이지 노트에 펜, 형광펜, 올가미, 도형 보정까지.</p>
+      </div>
+      <div class="feature">
+        <div class="ic">🔍</div>
+        <h3>손글씨도 검색돼요</h3>
+        <p>기기에서 손글씨를 인식해, 검색하면 어느 줄에 썼는지까지 보여줘요. 오프라인에서도 검색돼요.</p>
+      </div>
+      <div class="feature coral">
+        <div class="ic">✨</div>
+        <h3>별자리</h3>
+        <p>노트 하나하나가 별이에요. 揪AI가 관련 노트를 별자리로 묶어, 이번 학기에 무엇을 공부했는지 한눈에 보여줘요.</p>
+      </div>
+      <div class="feature">
+        <div class="ic">📄</div>
+        <h3>PDF·사진·녹음</h3>
+        <p>프린트를 불러와 바로 필기하고, 녹음하며 쓴 뒤 필기를 탭하면 그 순간을 다시 들을 수 있어요.</p>
+      </div>
+      <div class="feature">
+        <div class="ic">👥</div>
+        <h3>스터디와 함께 쓰기</h3>
+        <p>揪讀書 스터디 그룹에 노트를 공유하면 모두 같은 페이지에 동시에 써요. 서로의 필기와 프로필도 보여요.</p>
+      </div>
+      <div class="feature">
+        <div class="ic">📶</div>
+        <h3>오프라인에서도</h3>
+        <p>지하철에서도 도서관 지하에서도 쓰고, 다시 연결되면 자동 동기화. 폴더, 태그, 책갈피로 깔끔하게 정리해요.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="study">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">揪讀書와 함께</span>
+      <h2>하나의 계정으로,<br/>공부와 노트가 이어져요.</h2>
+      <p>揪筆記와 揪讀書는 같은 계정을 써요. 揪讀書에서 타이머를 시작하면 揪筆記도 공부 중인 걸 알아요.</p>
+    </div>
+    <div class="pair">
+      <div class="panel">
+        <h3>타이머 동기화</h3>
+        <p>揪讀書 타이머가 도는 동안 揪筆記 상단에 공부 중인 과목과 시간이 표시되고, 그동안 쓴 노트는 이번 공부 기록에 자동으로 연결돼요.</p>
+        <div class="live" aria-hidden="true"><span class="pulse"></span>공부 중 · 생물<span class="time">01:24:36</span></div>
+      </div>
+      <div class="panel">
+        <h3>공부한 것이 모두 보여요</h3>
+        <p>노트는 과목별로 별자리에 모이고, 최근에 쓴 노트일수록 크게 빛나요. 복습할 땐 별자리를 탭하기만 하면 돼요.</p>
+        <div class="sky" aria-hidden="true">
+          <i class="blob" style="left:8%;top:18%;width:42%;height:78%;background:#FBD3C6"></i>
+          <i class="blob" style="left:54%;top:6%;width:40%;height:70%;background:#DCD6FB"></i>
+          <i style="left:20%;top:34%;width:34px;height:34px;background:#FF7A5C"></i>
+          <i style="left:34%;top:62%;width:24px;height:24px;background:#FFB39E"></i>
+          <i style="left:64%;top:24%;width:40px;height:40px;background:#8E7CF5"></i>
+          <i style="left:80%;top:48%;width:22px;height:22px;background:#B9AEFA"></i>
+          <i style="left:12%;top:66%;width:18px;height:18px;background:#FF9A80"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="download">
+  <div class="wrap">
+    <div class="download">
+      <h2>揪筆記, 곧 출시돼요</h2>
+      <p>iOS와 Android 버전을 스토어에 올릴 준비를 하고 있어요. 揪讀書 계정이 있다면 그대로 로그인해서 쓰면 돼요.</p>
+      <div class="stores">
+        <span class="store soon">
+          <svg viewBox="0 0 24 24"><path d="M16.37 12.6c-.02-2.2 1.8-3.26 1.88-3.31-1.02-1.5-2.62-1.7-3.19-1.72-1.36-.14-2.65.8-3.34.8-.69 0-1.75-.78-2.88-.76-1.48.02-2.85.86-3.61 2.19-1.54 2.67-.39 6.62 1.11 8.79.73 1.06 1.6 2.25 2.75 2.21 1.1-.04 1.52-.71 2.85-.71 1.33 0 1.71.71 2.88.69 1.19-.02 1.94-1.08 2.67-2.14.84-1.23 1.19-2.42 1.21-2.48-.03-.01-2.32-.89-2.33-3.56zM14.17 6.13c.61-.74 1.02-1.76.91-2.78-.88.04-1.94.59-2.57 1.32-.56.65-1.06 1.69-.93 2.69.98.08 1.98-.5 2.59-1.23z"/></svg>
+          <span><small>곧 출시</small><b>App Store</b></span>
+        </span>
+        <span class="store soon">
+          <svg viewBox="0 0 24 24"><path d="M3.6 2.3 13.4 12l-9.8 9.7c-.35-.2-.6-.6-.6-1.1V3.4c0-.5.25-.9.6-1.1zm11.2 8.3 2.6-2.6 3.2 1.8c.9.5.9 1.9 0 2.4l-3.2 1.8-2.6-2.6L14.1 12zM5 1.6l10.9 6.2-2.4 2.4zm8.5 12.2 2.4 2.4L5 22.4z"/></svg>
+          <span><small>곧 출시</small><b>Google Play</b></span>
+        </span>
+      </div>
+      <span class="badge">무료 다운로드</span>
+      <p class="sister">아직 계정이 없나요? 먼저 <a href="/">揪讀書</a>를 받아 보세요. 하나의 계정으로 두 앱을 모두 쓸 수 있어요.</p>
+    </div>
+  </div>
+</section>
+
+
+<footer>
+  <p>© 2026 揪筆記 JoinNote · 揪讀書 팀</p>
+  <p>
+    <a href="/joinnote/ko/">홈</a>·
+    <a href="/joinnote/ko/privacy.html">개인정보 처리방침</a>·
+    <a href="/joinnote/ko/terms.html">이용약관</a>·
+    <a href="/joinnote/ko/child-safety.html">아동 안전 기준</a>·
+    <a href="/joinnote/ko/contact.html">문의하기</a>·
+    <a href="/">揪讀書</a>
+  </p>
+</footer>
+<script>document.addEventListener('click',e=>{const d=document.querySelector('.lang');if(d&&!d.contains(e.target))d.open=false});</script>
+</body>
+</html>

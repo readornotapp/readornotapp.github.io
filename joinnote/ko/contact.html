@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>문의하기 — 揪筆記</title>
+  <meta name="description" content="揪筆記 버그 신고, 기능 제안, 계정 삭제 요청." />
+  <link rel="canonical" href="https://read-or-not.com/joinnote/ko/contact.html" />
+  <link rel="alternate" hreflang="zh-Hant-TW" href="https://read-or-not.com/joinnote/contact.html" />
+  <link rel="alternate" hreflang="zh-Hans-CN" href="https://read-or-not.com/joinnote/zh-Hans/contact.html" />
+  <link rel="alternate" hreflang="en" href="https://read-or-not.com/joinnote/en/contact.html" />
+  <link rel="alternate" hreflang="ja" href="https://read-or-not.com/joinnote/ja/contact.html" />
+  <link rel="alternate" hreflang="ko" href="https://read-or-not.com/joinnote/ko/contact.html" />
+  <link rel="alternate" hreflang="x-default" href="https://read-or-not.com/joinnote/contact.html" />
+  <meta property="og:title" content="문의하기 — 揪筆記" />
+  <meta property="og:description" content="揪筆記 버그 신고, 기능 제안, 계정 삭제 요청." />
+  <meta property="og:image" content="https://read-or-not.com/joinnote/icon.png" />
+  <link rel="icon" type="image/png" href="/joinnote/icon.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/joinnote/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="揪筆記" />
+  <meta name="theme-color" content="#F5F2EB" />
+  <link rel="stylesheet" href="/joinnote/style.css" />
+  <style>
+    .lang{position:relative}
+    .lang summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:6px;font-size:14px;font-weight:600;
+      color:var(--ink);padding:7px 12px;border:1px solid var(--line);border-radius:999px;background:var(--surface)}
+    .lang summary::-webkit-details-marker{display:none}
+    .lang ul{position:absolute;right:0;top:calc(100% + 6px);list-style:none;background:var(--surface);border:1px solid var(--line);
+      border-radius:14px;padding:6px;min-width:140px;box-shadow:0 12px 30px rgba(23,23,31,.12);z-index:200}
+    .lang li a{display:block;padding:8px 12px;border-radius:9px;color:var(--ink);text-decoration:none;font-size:14px}
+    .lang li a:hover,.lang li a[aria-current]{background:var(--paper);color:var(--coral)}
+    .nav-right{display:flex;align-items:center;gap:22px}
+    .lang-note{font-size:13px;color:var(--ink-soft);margin:-28px 0 28px}
+
+    .hero-mini { text-align: center; margin-bottom: 36px; }
+    .hero-mini .eyebrow { font-size: 14px; font-weight: 700; color: var(--coral); letter-spacing: .04em; }
+    .hero-mini h1 { font-family: var(--serif); font-size: clamp(30px, 5vw, 42px); font-weight: 800; margin: 6px 0 8px; }
+    .hero-mini p { color: var(--ink-soft); font-size: 15px; }
+
+    .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 28px; }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 20px;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      transition: transform .15s, border-color .15s;
+    }
+    .card:hover { transform: translateY(-2px); border-color: var(--coral); }
+    .card .icon { font-size: 22px; }
+    .card h2 { font-family: var(--serif); font-size: 17px; margin: 8px 0 4px; }
+    .card p { font-size: 14px; color: var(--ink-soft); line-height: 1.7; }
+    .card .go { display: inline-block; margin-top: 8px; font-size: 14px; font-weight: 600; color: var(--coral); }
+
+    form.section label { display: block; font-size: 14px; font-weight: 600; margin: 14px 0 6px; }
+    form.section label:first-of-type { margin-top: 0; }
+    form.section input, form.section select, form.section textarea {
+      width: 100%;
+      font: inherit;
+      font-size: 15px;
+      color: var(--ink);
+      background: var(--raised);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 11px 14px;
+    }
+    form.section textarea { min-height: 140px; resize: vertical; }
+    form.section input:focus, form.section select:focus, form.section textarea:focus { outline: 2px solid var(--coral); outline-offset: 1px; }
+    .submit {
+      margin-top: 18px;
+      width: 100%;
+      border: 0;
+      border-radius: 999px;
+      padding: 13px;
+      font: inherit;
+      font-weight: 700;
+      font-size: 16px;
+      color: #fff;
+      background: var(--ink);
+      cursor: pointer;
+    }
+    .submit:hover { background: var(--coral); }
+    .success { display: none; text-align: center; }
+    .success h2 { justify-content: center; border: 0; }
+
+    @media (max-width: 720px) { .cards { grid-template-columns: 1fr; } }
+  
+    body{font-family:-apple-system, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif}
+  </style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="/joinnote/ko/">
+      <img src="/joinnote/icon.png" alt="揪筆記" />
+      揪筆記
+    </a>
+    <div class="nav-right">
+      <ul class="nav-links">
+      <li><a href="/joinnote/ko/#features">기능</a></li>
+      <li><a href="/joinnote/ko/#download">다운로드</a></li>
+      <li><a href="/joinnote/ko/contact.html">문의하기</a></li>
+      </ul>
+      <details class="lang">
+        <summary aria-label="Language">🌐 한국어</summary>
+        <ul>
+        <li><a href="/joinnote/contact.html" hreflang="zh-Hant-TW" lang="zh-Hant-TW" onclick="try{localStorage.setItem('jn.lang','zh-Hant')}catch(e){}">繁體中文</a></li>
+        <li><a href="/joinnote/zh-Hans/contact.html" hreflang="zh-Hans-CN" lang="zh-Hans-CN" onclick="try{localStorage.setItem('jn.lang','zh-Hans')}catch(e){}">简体中文</a></li>
+        <li><a href="/joinnote/en/contact.html" hreflang="en" lang="en" onclick="try{localStorage.setItem('jn.lang','en')}catch(e){}">English</a></li>
+        <li><a href="/joinnote/ja/contact.html" hreflang="ja" lang="ja" onclick="try{localStorage.setItem('jn.lang','ja')}catch(e){}">日本語</a></li>
+        <li><a href="/joinnote/ko/contact.html" hreflang="ko" lang="ko" onclick="try{localStorage.setItem('jn.lang','ko')}catch(e){}" aria-current="true">한국어</a></li>
+        </ul>
+      </details>
+    </div>
+  </div>
+</nav>
+
+<div class="content">
+  <div class="hero-mini">
+    <div class="eyebrow">문의하기</div>
+    <h1>궁금한 점이 있나요?</h1>
+    <p>기능 제안, 버그 신고, 계정 관련 문의 모두 환영해요.</p>
+  </div>
+
+  <div class="cards">
+    <a class="card" href="mailto:info@read-or-not.com?subject=%5B%E6%8F%AA%E7%AD%86%E8%A8%98%5D%20">
+      <div class="icon">📧</div>
+      <h2>이메일</h2>
+      <p>일반 문의, 제휴 문의, 계정 관련 요청.</p>
+      <span class="go">info@read-or-not.com →</span>
+    </a>
+    <a class="card" href="#form" onclick="pick('bug')">
+      <div class="icon">🐛</div>
+      <h2>버그 신고</h2>
+      <p>버그나 이상한 동작을 발견했나요? 상황과 기기 모델, OS 버전을 알려주세요.</p>
+      <span class="go">신고하기 →</span>
+    </a>
+    <a class="card" href="#form" onclick="pick('feature')">
+      <div class="icon">💡</div>
+      <h2>기능 제안</h2>
+      <p>揪筆記를 더 좋게 만들 아이디어가 있나요? 기꺼이 들을게요.</p>
+      <span class="go">제안 보내기 →</span>
+    </a>
+    <a class="card" href="#form" onclick="pick('delete')">
+      <div class="icon">🗑️</div>
+      <h2>계정 삭제</h2>
+      <p>앱의 '내 정보 → 계정 삭제'에서 바로 삭제하거나, 계정 이메일로 연락 주시면 7영업일 이내에 처리해 드려요.</p>
+      <span class="go">삭제 요청 →</span>
+    </a>
+  </div>
+
+  <form class="section" id="form" onsubmit="send(event)">
+    <h2>메시지 보내기</h2>
+    <label for="name">이름</label>
+    <input id="name" required autocomplete="name" />
+    <label for="email">이메일</label>
+    <input id="email" type="email" required autocomplete="email" />
+    <label for="subject">유형</label>
+    <select id="subject" required>
+      <option value="">유형을 선택하세요</option>
+      <option value="bug">버그 신고</option>
+      <option value="feature">기능 제안</option>
+      <option value="account">계정 문의</option>
+      <option value="delete">계정 삭제 요청</option>
+      <option value="safety">아동 안전 신고</option>
+      <option value="other">기타</option>
+    </select>
+    <label for="message">메시지</label>
+    <textarea id="message" required></textarea>
+    <button class="submit" type="submit">보내기</button>
+  </form>
+
+  <div class="section success" id="success">
+    <h2>✅ 메일 앱을 열었어요</h2>
+    <p>메일 앱에서 내용을 확인하고 보내 주세요. 최대한 빨리 이메일로 답장드릴게요.</p>
+  </div>
+</div>
+
+<script>
+  function pick(value) { document.getElementById('subject').value = value; }
+
+  function send(e) {
+    e.preventDefault();
+    const labels = {"bug": "버그 신고", "feature": "기능 제안", "account": "계정 문의", "delete": "계정 삭제 요청", "safety": "아동 안전 신고", "other": "기타"};
+    const v = id => document.getElementById(id).value;
+    const subject = encodeURIComponent('[揪筆記] ' + (labels[v('subject')] || v('subject')));
+    const body = encodeURIComponent('이름: ' + v('name') + '\n이메일: ' + v('email') + '\n\n' + v('message'));
+    window.location.href = 'mailto:info@read-or-not.com?subject=' + subject + '&body=' + body;
+    document.getElementById('form').style.display = 'none';
+    document.getElementById('success').style.display = 'block';
+  }
+</script>
+
+<footer>
+  <p>© 2026 揪筆記 JoinNote · 揪讀書 팀</p>
+  <p>
+    <a href="/joinnote/ko/">홈</a>·
+    <a href="/joinnote/ko/privacy.html">개인정보 처리방침</a>·
+    <a href="/joinnote/ko/terms.html">이용약관</a>·
+    <a href="/joinnote/ko/child-safety.html">아동 안전 기준</a>·
+    <a href="/joinnote/ko/contact.html">문의하기</a>·
+    <a href="/">揪讀書</a>
+  </p>
+</footer>
+<script>document.addEventListener('click',e=>{const d=document.querySelector('.lang');if(d&&!d.contains(e.target))d.open=false});</script>
+</body>
+</html>
