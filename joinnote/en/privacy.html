@@ -64,7 +64,7 @@
 
 <div class="content">
   <h1 class="page-title">Privacy Policy</h1>
-  <p class="page-date">Last updated: October 1, 2026</p>
+  <p class="page-date">Last updated: October 12, 2026</p>
   <p class="page-intro">Welcome to Join Note (揪筆記, the "Service"), a handwritten notes app provided by the Read or Not development team ("we", "us"). Join Note shares its accounts and data with our app Read or Not (揪讀書). We take your personal data and privacy seriously; this policy explains what we collect and how we use, keep and protect it.<br/><br/>By using the Service you agree to this Privacy Policy.</p>
   <p class="lang-note">This English version is provided for convenience. If it differs from the Traditional Chinese version, the Traditional Chinese version prevails.</p>
 
@@ -78,13 +78,16 @@
       <li><a href="#s5">5. Join AI features</a></li>
       <li><a href="#s6">6. How we use data</a></li>
       <li><a href="#s7">7. Sharing and disclosure</a></li>
-      <li><a href="#s8">8. Third-party services</a></li>
-      <li><a href="#s9">9. Security</a></li>
-      <li><a href="#s10">10. Your rights</a></li>
-      <li><a href="#s11">11. Deleting your account</a></li>
-      <li><a href="#s12">12. Children and minors</a></li>
-      <li><a href="#s13">13. Changes to this policy</a></li>
-      <li><a href="#s14">14. Contact us</a></li>
+      <li><a href="#s8">8. Version history</a></li>
+      <li><a href="#s9">9. Reports and content review</a></li>
+      <li><a href="#s10">10. Notes kept on this device only</a></li>
+      <li><a href="#s11">11. Third-party services</a></li>
+      <li><a href="#s12">12. Security</a></li>
+      <li><a href="#s13">13. Your rights</a></li>
+      <li><a href="#s14">14. Deleting your account</a></li>
+      <li><a href="#s15">15. Children and minors</a></li>
+      <li><a href="#s16">16. Changes to this policy</a></li>
+      <li><a href="#s17">17. Contact us</a></li>
     </ol>
   </div>
 
@@ -110,6 +113,9 @@
       <li>Note titles, folders, tags, bookmarks, favorites and pins</li>
       <li>The text index produced by handwriting recognition (used for search; see section 4)</li>
       <li>Constellation galaxies, star positions and icons</li>
+      <li>Table and text-box style settings, and recording names</li>
+      <li>Version history of your notes (copies of a note from before it was edited — see section 8)</li>
+      <li>Sharing settings: which friends or study groups a note is shared with, and whether each can edit or only view</li>
     </ul>
     <h3>Study and usage data</h3>
     <ul>
@@ -117,6 +123,7 @@
       <li>Links between notes and study records (notes edited during a session are linked to that record)</li>
       <li>Presence and live ink while co-editing (sent only to other members of the same note; live ink is not stored)</li>
       <li>Daily usage counts for Join AI features</li>
+      <li>Reports you file (the reported note, the reason and any details — see section 9)</li>
     </ul>
     <h3>Device information</h3>
     <ul>
@@ -124,6 +131,15 @@
       <li>Push notification tokens (Firebase Cloud Messaging on Android)</li>
       <li>Error and crash logs</li>
     </ul>
+    <h3>Plans and purchases</h3>
+    <ul>
+      <li>Your current plan, its expiry date and where it was bought (App Store or Google Play)</li>
+      <li>Transaction identifiers and purchase receipts provided by the store, used to verify and restore purchases and to handle renewals and refunds</li>
+      <li>How much of each Join AI allowance you have used, and how much Join Note cloud storage your files take up</li>
+    </ul>
+    <p>Payments are handled by the Apple App Store or Google Play. We never receive your card number or other payment details.</p>
+    <h3>Where your files are stored</h3>
+    <p>PDFs and pictures in your notes can be stored in Join Note cloud storage or in your own cloud (iCloud or Google Drive). If you choose your own cloud, these files are saved to a folder in your iCloud or Google Drive that is reserved for this app, and are not kept in our storage. The app can only access files it created itself and cannot read anything else in your cloud. We only record which location you chose, so that the same setting applies when you sign in on a new device.</p>
     <div class="note-box"><p>The Service does not access your location, contacts or calendar, and does not use advertising identifiers.</p></div>
   </div>
 
@@ -142,6 +158,7 @@
     <h2><span class="num">4</span>Data processed on your device</h2>
     <p>So you can search your handwriting, the Service recognizes it <strong>on your device</strong> (Apple Vision on iOS, Google ML Kit Digital Ink Recognition on Android). Your ink is not uploaded to a third party for this; on Android, the language model is downloaded from Google the first time. The recognized text is synced with the note and used for search and Join AI organizing.</p>
     <p>To open faster and work offline, notes, images and the constellation are cached on your device (up to about 500 MB). You can clear the cache at any time in the app under Me → Clear Cache; offline changes that haven't synced yet are never cleared.</p>
+    <p>Flashcards (recall cards) and their review schedule are kept only on your device, and the Home Screen widget reads them from there; they are not uploaded to our servers. Notes you create as "This device only" — with their images, recordings and PDFs — also stay on your device (see section 10).</p>
   </div>
 
   <div class="section" id="s5">
@@ -151,8 +168,11 @@
       <li>Note titles and the beginning of each note's text and recognized handwriting (up to about 260 characters per note)</li>
       <li>When making recall cards, the part of the note you lassoed (text and recognized handwriting)</li>
       <li>Descriptions you write for a star, or expressions you ask to solve</li>
+      <li>When generating flashcards: the note's text, recognized handwriting, and pictures of pages that contain handwriting (up to 6 pages, so the AI can read the handwriting directly)</li>
+      <li>When recognizing a table: the photo or screenshot you take or choose</li>
     </ul>
     <p>We do not send your email address, name or other account details to Gemini. AI results are for reference only and may be wrong. If you don't want your notes processed by AI, don't use Join AI features; when you don't, no note content is sent to an AI service.</p>
+    <p>How many times you can use each Join AI feature depends on your plan. What is sent to the AI is used only to produce that result; we do not keep separate copies of these images.</p>
   </div>
 
   <div class="section" id="s6">
@@ -172,7 +192,8 @@
   <div class="section" id="s7">
     <h2><span class="num">7</span>Sharing and disclosure</h2>
     <p>We <strong>do not sell, rent or trade</strong> your personal data, and we never use your notes for advertising.</p>
-    <p>Your notes are private by default. Only when you share a note with a Read or Not study group can that group's members see or co-edit it. You can stop sharing at any time.</p>
+    <p>Your notes are private to you by default. Others can access a note only when you share it: with <strong>individual friends</strong> (your Read or Not friends) or with <strong>study groups</strong>, choosing for each whether they can edit or only view. People who can only view cannot change the note. You can change permissions or stop sharing at any time.</p>
+    <p>While editing together, the other members of the note see your nickname, avatar, the page you're on and your live ink.</p>
     <p>Otherwise, we disclose data only:</p>
     <ul>
       <li>With your consent</li>
@@ -183,7 +204,25 @@
   </div>
 
   <div class="section" id="s8">
-    <h2><span class="num">8</span>Third-party services</h2>
+    <h2><span class="num">8</span>Version history</h2>
+    <p>So that content changed or deleted by mistake can be recovered, when someone starts editing a note the server first keeps a copy of the note as it was (up to 20 per note; older ones are deleted automatically) and records who started editing. Everyone with access to the note can view these versions; people who can edit can restore an earlier version, and the content before the restore is saved as a version first.</p>
+    <p>Version history is deleted together with the note when it is permanently deleted, or when the account is deleted.</p>
+  </div>
+
+  <div class="section" id="s9">
+    <h2><span class="num">9</span>Reports and content review</h2>
+    <p>If a note shared with you contains inappropriate content, you can use "Report this note" inside it. A report records the reporter, the reported note, the reason and any details you add.</p>
+    <p>To handle a report, our administrators may view the reported note. We never tell the reported person who filed the report. Reports are kept until handled and, where needed, for a period afterwards to prevent abuse and to meet legal requirements.</p>
+  </div>
+
+  <div class="section" id="s10">
+    <h2><span class="num">10</span>Notes kept on this device only</h2>
+    <p>When creating a note you can choose "This device only". Such notes are never uploaded to our servers, so they cannot be shared, co-edited or appear in the constellation, and they are not backed up (their version history stays on the device too): if you delete the app, clear its data or change devices, they cannot be recovered.</p>
+    <p>If you use Join AI on such a note (for example to generate flashcards or recognize a table), the content needed for that request is still sent to the AI service for processing, but it is not stored.</p>
+  </div>
+
+  <div class="section" id="s11">
+    <h2><span class="num">11</span>Third-party services</h2>
     <p>The Service uses the following third parties; their handling of data is also governed by their own privacy policies:</p>
     <ul>
       <li>Google Sign-In, Google Gemini API, Google ML Kit, Firebase Cloud Messaging (Google)</li>
@@ -191,12 +230,13 @@
       <li>Fly.io (backend hosting)</li>
       <li>MongoDB (database)</li>
       <li>Microsoft Azure Blob Storage (images, PDFs and audio files)</li>
+      <li>Google Drive, Apple iCloud (only if you choose to store files in your own cloud)</li>
       <li>Apple App Store, Google Play</li>
     </ul>
   </div>
 
-  <div class="section" id="s9">
-    <h2><span class="num">9</span>Security</h2>
+  <div class="section" id="s12">
+    <h2><span class="num">12</span>Security</h2>
     <p>We use reasonable technical and organizational measures to protect your data, including:</p>
     <ul>
       <li>HTTPS encryption in transit</li>
@@ -207,14 +247,14 @@
     <div class="note-box"><p>No transmission or storage is 100% secure. Please keep your account and password safe.</p></div>
   </div>
 
-  <div class="section" id="s10">
-    <h2><span class="num">10</span>Your rights</h2>
+  <div class="section" id="s13">
+    <h2><span class="num">13</span>Your rights</h2>
     <p>You may access, correct, export or delete your personal data, and stop using the Service at any time. You can edit your profile in the app and delete notes (deleted notes first move to Recently Deleted, where they can be deleted permanently).</p>
     <p>To exercise any other right, contact us using the details below.</p>
   </div>
 
-  <div class="section" id="s11">
-    <h2><span class="num">11</span>Deleting your account</h2>
+  <div class="section" id="s14">
+    <h2><span class="num">14</span>Deleting your account</h2>
     <p>You can delete your account at any time in Join Note under Me → Delete account, or in Read or Not's account settings; or email <a href="mailto:info@read-or-not.com?subject=%5B%E6%8F%AA%E7%AD%86%E8%A8%98%5D%20Account%20deletion%20request">info@read-or-not.com</a> and we'll handle it within 7 business days.</p>
     <div class="note-box"><p>Because Join Note and Read or Not share an account, deleting it deletes your account and all your data in both apps. This cannot be undone.</p></div>
     <p>When your account is deleted, we immediately and permanently delete:</p>
@@ -224,24 +264,25 @@
       <li>Folders, tags, bookmarks, your constellation and AI-generated star icons</li>
       <li>Study records, check-in posts and photos, chat messages you sent, and feedback</li>
       <li>Your entries in other people's friend lists, likes and comments</li>
+      <li>Your notes' version history and the reports you filed</li>
     </ul>
-    <p>Study groups you host are handed to the longest-standing other member, or closed if there is none. Edits you made to other people's notes stay in those notes, since they belong to their owners. Data we are legally required to keep is excepted.</p>
+    <p>Study groups you host are handed to the longest-standing other member, or closed if there is none. Edits you made to other people's notes stay in those notes, since they belong to their owners. Data we are legally required to keep is excepted. You are also removed from the sharing lists of other people's notes.</p>
   </div>
 
-  <div class="section" id="s12">
-    <h2><span class="num">12</span>Children and minors</h2>
+  <div class="section" id="s15">
+    <h2><span class="num">15</span>Children and minors</h2>
     <p>The Service is not directed to children under 13. Users under 18 should use the Service only after a parent or legal guardian has read and agreed to this policy.</p>
     <p>If you are a parent or guardian and believe your child gave us personal data without consent, contact us and we will delete it. See also our <a href="/joinnote/en/child-safety.html">Child Safety Standards</a>.</p>
   </div>
 
-  <div class="section" id="s13">
-    <h2><span class="num">13</span>Changes to this policy</h2>
+  <div class="section" id="s16">
+    <h2><span class="num">16</span>Changes to this policy</h2>
     <p>We may update this Privacy Policy; the date at the top of this page shows the latest version.</p>
     <p>We'll announce significant changes in the app or by other appropriate means. Continuing to use the Service after a change means you accept it.</p>
   </div>
 
-  <div class="section" id="s14">
-    <h2><span class="num">14</span>Contact us</h2>
+  <div class="section" id="s17">
+    <h2><span class="num">17</span>Contact us</h2>
     <p>If you have questions about this Privacy Policy, contact us at:</p>
     <div class="contact-card">
       <p style="font-weight:700; margin-bottom:6px !important;">Join Note · the Read or Not development team</p>
