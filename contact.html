@@ -37,7 +37,7 @@
       background: rgba(248, 247, 255, 0.85);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(79, 70, 229, 0.08);
+      border-bottom: 1px solid rgba(11, 42, 91, 0.08);
       z-index: 100;
       padding: 0 24px;
     }
@@ -124,7 +124,7 @@
       background: var(--card);
       border-radius: var(--radius);
       padding: 28px;
-      border: 1px solid rgba(79, 70, 229, 0.06);
+      border: 1px solid rgba(11, 42, 91, 0.06);
       box-shadow: 0 2px 12px rgba(0,0,0,.04);
       display: flex;
       flex-direction: column;
@@ -167,7 +167,7 @@
       background: var(--card);
       border-radius: var(--radius);
       padding: 40px;
-      border: 1px solid rgba(79, 70, 229, 0.06);
+      border: 1px solid rgba(11, 42, 91, 0.06);
       box-shadow: 0 2px 12px rgba(0,0,0,.04);
     }
     .form-card h2 {
@@ -202,7 +202,7 @@
     .form-group select,
     .form-group textarea {
       padding: 12px 16px;
-      border: 1.5px solid rgba(79, 70, 229, 0.15);
+      border: 1.5px solid rgba(11, 42, 91, 0.15);
       border-radius: 12px;
       font-size: 15px;
       font-family: inherit;
@@ -216,7 +216,7 @@
     .form-group select:focus,
     .form-group textarea:focus {
       border-color: var(--indigo);
-      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
+      box-shadow: 0 0 0 3px rgba(11, 42, 91, 0.12);
     }
     .form-group input::placeholder,
     .form-group textarea::placeholder {
@@ -244,11 +244,11 @@
       font-family: inherit;
       cursor: pointer;
       transition: transform .15s, box-shadow .15s, opacity .15s;
-      box-shadow: 0 4px 16px rgba(79, 70, 229, .3);
+      box-shadow: 0 4px 16px rgba(11, 42, 91, .3);
     }
     .btn-submit:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(79, 70, 229, .35);
+      box-shadow: 0 8px 24px rgba(11, 42, 91, .35);
     }
     .btn-submit:active { transform: none; opacity: .9; }
 
@@ -279,7 +279,7 @@
       padding: 32px 24px;
       color: var(--sub);
       font-size: 14px;
-      border-top: 1px solid rgba(79,70,229,.08);
+      border-top: 1px solid rgba(11, 42, 91,.08);
     }
     footer a {
       color: var(--indigo);
@@ -296,26 +296,29 @@
       .form-row { grid-template-columns: 1fr; }
     }
   </style>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chiron+GoRound+TC:wght@700;900&display=swap" />
+  <link rel="stylesheet" href="/site.css" />
 </head>
 <body>
 
 <nav>
   <div class="nav-inner">
     <a class="nav-logo" href="/">
-      <img src="read_or_not.png" alt="揪讀書" />
+      <img src="/read_or_not.png" alt="" />
       揪讀書
     </a>
     <ul class="nav-links">
-      <li><a href="/#features">功能</a></li>
-      <li><a href="/#how">使用方式</a></li>
-      <li><a href="/#download">下載</a></li>
+      <li><a href="/#groups">揪團</a></li>
+      <li><a href="/#timer">計時</a></li>
+      <li><a href="/joinnote/">揪筆記</a></li>
+      <li><a class="nav-cta" href="/#download">下載</a></li>
     </ul>
   </div>
 </nav>
 
 <div class="content">
   <div class="page-header">
-    <div class="page-badge">💬 聯絡我們</div>
+    <div class="page-badge">聯絡我們</div>
     <h1 class="page-title">有任何問題嗎？</h1>
     <p class="page-sub">不管是功能建議、問題回報或帳號相關問題，都歡迎告訴我們。</p>
   </div>
@@ -389,7 +392,15 @@
 </div>
 
 <footer>
-  <p>© 2026 揪讀書 ReadOrNot &nbsp;·&nbsp; <a href="/">回首頁</a> &nbsp;·&nbsp; <a href="/privacy.html">隱私權政策</a> &nbsp;·&nbsp; <a href="/terms.html">服務條款</a> &nbsp;·&nbsp; <a href="/child-safety.html">兒童安全標準</a> &nbsp;·&nbsp; <a href="/contact.html">聯絡我們</a></p>
+  <p>© 2026 揪讀書 Read or Not</p>
+  <p>
+    <a href="/">回首頁</a> ·
+    <a href="/privacy.html">隱私權政策</a> ·
+    <a href="/terms.html">服務條款</a> ·
+    <a href="/child-safety.html">兒童安全標準</a> ·
+    <a href="/contact.html">聯絡我們</a> ·
+    <a href="/joinnote/">揪筆記</a>
+  </p>
 </footer>
 
 <script>

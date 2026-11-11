@@ -1,831 +1,453 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-Hant-TW">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>揪讀書 — 找到你的讀書夥伴</title>
+  <title>揪讀書 — 讓一個人讀書，不再只是一個人</title>
+  <meta name="description" content="揪讀書是讀書揪團 App：依考試和科目找讀書團、番茄鐘與翻面計時、點亮自習燈讓朋友看到你正在專注，還有統計、成就和動態讀書場景。iOS、Android 免費下載。" />
+  <link rel="canonical" href="https://read-or-not.com/" />
+  <meta property="og:title" content="揪讀書 — 讓一個人讀書，不再只是一個人" />
+  <meta property="og:description" content="找讀書團、開計時器、點亮自習燈。iOS、Android 免費下載。" />
+  <meta property="og:image" content="https://read-or-not.com/read_or_not.png" />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#F6F7FB" />
   <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
-<link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
-<link rel="shortcut icon" href="/favicon/favicon.ico" />
-<link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
-<meta name="apple-mobile-web-app-title" content="揪讀書" />
-<link rel="manifest" href="/favicon/site.webmanifest" />
+  <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
+  <link rel="shortcut icon" href="/favicon/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="揪讀書" />
+  <link rel="manifest" href="/favicon/site.webmanifest" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chiron+GoRound+TC:wght@700;900&display=swap" />
+  <link rel="stylesheet" href="/site.css" />
   <style>
-    :root {
-      --indigo: #4f46e5;
-      --indigo-light: #eef2ff;
-      --indigo-mid: #818cf8;
-      --orange: #f97316;
-      --green: #22c55e;
-      --text: #1e1b4b;
-      --sub: #6b7280;
-      --bg: #f8f7ff;
-      --card: #ffffff;
-      --radius: 20px;
-    }
+    h1, h2, h3 { font-family: var(--round); color: var(--navy); text-wrap: balance; }
+    .nw { white-space: nowrap; }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      font-family: -apple-system, "Helvetica Neue", "PingFang TC", sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-    }
-
-    /* NAV */
-    nav {
-      position: sticky;
-      top: 0;
-      background: rgba(248, 247, 255, 0.85);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(79, 70, 229, 0.08);
-      z-index: 100;
-      padding: 0 24px;
-    }
-    .nav-inner {
-      max-width: 1080px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 60px;
-    }
-    .nav-logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--indigo);
-      text-decoration: none;
-    }
-    .nav-logo img {
-      width: 36px;
-      height: 36px;
-      border-radius: 10px;
-    }
-    .nav-links {
-      display: flex;
-      gap: 28px;
-      list-style: none;
-    }
-    .nav-links a {
-      color: var(--sub);
-      text-decoration: none;
-      font-size: 15px;
-      font-weight: 500;
-      transition: color .2s;
-    }
-    .nav-links a:hover { color: var(--indigo); }
-
-    /* HERO */
-    .hero {
-      max-width: 1080px;
-      margin: 0 auto;
-      padding: 80px 24px 60px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 60px;
-      align-items: center;
-    }
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: var(--indigo-light);
-      color: var(--indigo);
-      font-size: 13px;
-      font-weight: 600;
-      padding: 6px 14px;
-      border-radius: 100px;
-      margin-bottom: 20px;
-    }
-    .hero-badge span { font-size: 16px; }
-    .hero h1 {
-      font-size: clamp(36px, 5vw, 52px);
-      font-weight: 800;
-      line-height: 1.2;
-      color: var(--text);
-      margin-bottom: 20px;
-    }
-    .hero h1 em {
-      font-style: normal;
-      color: var(--indigo);
-    }
-    .hero p {
-      font-size: 17px;
-      color: var(--sub);
-      margin-bottom: 32px;
-      max-width: 440px;
-    }
-    .hero-buttons {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-    .btn-appstore {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: #000;
-      color: #fff;
-      border: none;
-      border-radius: 14px;
-      padding: 12px 24px;
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-      text-decoration: none;
-      transition: transform .15s, box-shadow .15s;
-      box-shadow: 0 4px 16px rgba(0,0,0,.2);
-    }
-    .btn-appstore:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(0,0,0,.28);
-    }
-    .btn-appstore svg { flex-shrink: 0; }
-    .btn-appstore-text { display: flex; flex-direction: column; line-height: 1.2; }
-    .btn-appstore-sub { font-size: 10px; font-weight: 400; opacity: .8; }
-    .btn-appstore-main { font-size: 16px; font-weight: 700; }
-
-    .btn-googleplay {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: #000;
-      color: #fff;
-      border: none;
-      border-radius: 14px;
-      padding: 12px 24px;
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-      text-decoration: none;
-      transition: transform .15s, box-shadow .15s;
-      box-shadow: 0 4px 16px rgba(0,0,0,.2);
-    }
-    .btn-googleplay:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(0,0,0,.28);
-    }
-    .btn-googleplay svg { flex-shrink: 0; }
-    .btn-googleplay-text { display: flex; flex-direction: column; line-height: 1.2; }
-    .btn-googleplay-sub { font-size: 10px; font-weight: 400; opacity: .8; }
-    .btn-googleplay-main { font-size: 16px; font-weight: 700; }
-
-    .btn-secondary {
-      background: transparent;
-      color: var(--indigo);
-      border: 2px solid var(--indigo);
-      border-radius: 14px;
-      padding: 12px 26px;
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-      text-decoration: none;
-      transition: background .15s;
-      display: inline-flex;
-      align-items: center;
-    }
-    .btn-secondary:hover { background: var(--indigo-light); }
-
-    /* PHONE MOCKUP */
-    .hero-visual {
-      display: flex;
-      justify-content: center;
-      position: relative;
-    }
+    /* phone frame around real screenshots */
     .phone {
-      width: 240px;
-      background: #1a1a2e;
-      border-radius: 44px;
-      padding: 14px;
-      box-shadow: 0 32px 80px rgba(79,70,229,.2), 0 8px 24px rgba(0,0,0,.15);
-      position: relative;
+      --w: 270px;
+      width: var(--w); flex: none;
+      padding: calc(var(--w) * .032);
+      border-radius: calc(var(--w) * .16);
+      background: #0E1420;
+      box-shadow: 0 30px 60px -20px rgba(11, 42, 91, .35), 0 10px 20px -10px rgba(11, 42, 91, .2);
     }
-    .phone::before {
-      content: '';
-      display: block;
-      width: 80px;
-      height: 26px;
-      background: #1a1a2e;
-      border-radius: 0 0 18px 18px;
-      position: absolute;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 2;
-    }
-    .phone-screen {
-      background: var(--bg);
-      border-radius: 34px;
-      overflow: hidden;
-      aspect-ratio: 9/19.5;
-      display: flex;
-      flex-direction: column;
-    }
-    .phone-status {
-      background: var(--bg);
-      padding: 14px 18px 4px;
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--text);
-      display: flex;
-      justify-content: space-between;
-    }
-    .phone-content {
-      flex: 1;
-      padding: 10px 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .mock-timer-wrap {
-      position: relative;
-      width: 120px;
-      height: 120px;
-      margin: 0 auto;
-      cursor: pointer;
-    }
-    .mock-timer-svg {
-      position: absolute;
-      top: 0; left: 0;
-      width: 120px; height: 120px;
-      transform: rotate(-90deg);
-    }
-    .mock-timer-track {
-      fill: none;
-      stroke: var(--indigo-light);
-      stroke-width: 8;
-    }
-    .mock-timer-arc {
-      fill: none;
-      stroke: var(--indigo);
-      stroke-width: 8;
-      stroke-linecap: round;
-      stroke-dasharray: 314;
-      stroke-dashoffset: 314;
-      transition: stroke 0.3s;
-    }
-    .mock-timer-inner {
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-    .mock-time { font-size: 20px; font-weight: 800; color: var(--indigo); transition: color .3s; }
-    .mock-label { font-size: 9px; color: var(--sub); transition: color .3s; }
-    .mock-card {
-      background: var(--card);
-      border-radius: 14px;
-      padding: 10px 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,.06);
-    }
-    .mock-card-title { font-size: 9px; color: var(--sub); margin-bottom: 6px; }
-    .mock-avatars { display: flex; gap: 4px; }
-    .mock-avatar {
-      width: 28px; height: 28px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 11px; font-weight: 700; color: #fff;
-    }
-    .mock-btn {
-      background: var(--indigo);
-      color: #fff;
-      border-radius: 12px;
-      padding: 10px;
-      text-align: center;
-      font-size: 11px;
-      font-weight: 700;
-      cursor: pointer;
-      border: none;
-      width: 100%;
-      transition: background .2s;
-    }
-    .mock-btn.paused {
-      background: var(--green);
-    }
-    .floating-card {
-      position: absolute;
-      background: white;
-      border-radius: 16px;
-      padding: 10px 14px;
-      box-shadow: 0 8px 24px rgba(0,0,0,.12);
-      white-space: nowrap;
-    }
-    .float-right { right: -60px; top: 20%; }
-    .float-left { left: -70px; bottom: 25%; }
-    .float-tag { font-size: 12px; font-weight: 600; color: var(--text); }
-    .float-sub { font-size: 11px; color: var(--sub); }
-    .streak-badge {
-      background: linear-gradient(135deg, #f97316, #fb923c);
-      color: white;
-      font-size: 18px;
-      font-weight: 800;
-      padding: 6px 12px;
-      border-radius: 12px;
+    .phone img { width: 100%; height: auto; aspect-ratio: 1320 / 2868; object-fit: cover; border-radius: calc(var(--w) * .13); background: #fff; }
+
+    /* ── Hero ── */
+    .hero { display: grid; grid-template-columns: 1.1fr .9fr; gap: 40px; align-items: center; padding: 72px 0 56px; }
+    .kicker { font-size: 15px; font-weight: 700; color: var(--sub); letter-spacing: .08em; }
+    .hero h1 { position: relative; display: inline-block; font-size: clamp(40px, 5.6vw, 68px); font-weight: 900; line-height: 1.22; letter-spacing: .01em; margin: 14px 0 22px; }
+    .hero h1 mark { background: linear-gradient(transparent 62%, var(--sun) 62%, var(--sun) 92%, transparent 92%); color: inherit; }
+    .spark { position: absolute; right: -46px; top: -18px; width: 44px; height: 44px; }
+    .lead { font-size: 18px; color: var(--sub); max-width: 30em; line-height: 1.9; }
+    .hero .stores { margin-top: 30px; }
+
+    .tally { display: flex; flex-wrap: wrap; gap: 14px 40px; margin-top: 44px; padding-top: 26px; border-top: 1px solid var(--line); }
+    .tally b { display: block; font-family: var(--round); font-weight: 900; font-size: 34px; line-height: 1.15; color: var(--navy); font-variant-numeric: tabular-nums; }
+    .tally span { font-size: 14px; color: var(--sub); font-weight: 600; }
+    .tally-note { flex-basis: 100%; font-size: 13px; color: var(--sub); }
+
+    .hero-art { position: relative; display: flex; justify-content: center; padding: 10px 0 30px; }
+    .hero-art .phone.back { --w: 230px; position: absolute; left: 0; top: 70px; transform: rotate(-6deg); opacity: .96; }
+    .hero-art .phone.front { --w: 280px; position: relative; margin-left: 110px; transform: rotate(3deg); }
+
+    /* ── Feature rows ── */
+    section { padding: 84px 0; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+    .row .shot { display: flex; justify-content: center; }
+    .row.flip .shot { order: 2; }
+    .tag { display: inline-flex; align-items: center; gap: 9px; font-size: 15px; font-weight: 800; color: var(--navy); letter-spacing: .06em; }
+    .tag i { width: 12px; height: 12px; border-radius: 50%; background: var(--c, var(--sun)); }
+    h2 { font-size: clamp(30px, 4vw, 44px); font-weight: 900; line-height: 1.3; margin: 12px 0 16px; }
+    .body { font-size: 17px; color: var(--sub); line-height: 1.95; max-width: 32em; }
+    .points { list-style: none; margin-top: 22px; border-top: 1px solid var(--line); max-width: 34em; }
+    .points li { padding: 13px 0; border-bottom: 1px solid var(--line); font-size: 16px; }
+    .points b { color: var(--navy); }
+
+    .modes { display: grid; grid-template-columns: 1fr 1fr; gap: 0 32px; margin-top: 24px; border-top: 1px solid var(--line); }
+    .modes div { padding: 14px 0; border-bottom: 1px solid var(--line); }
+    .modes dt { font-family: var(--round); font-weight: 700; font-size: 17px; color: var(--navy); }
+    .modes dd { font-size: 14.5px; color: var(--sub); line-height: 1.7; }
+
+    /* ── Scenes (dark band) ── */
+    .scenes { background: #081B3D; color: #fff; }
+    .scenes h2 { color: #fff; }
+    .scenes .tag { color: #fff; }
+    .scenes .body { color: rgba(255, 255, 255, .72); }
+    .strip { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-top: 40px; }
+    .strip figure { position: relative; border-radius: 22px; overflow: hidden; aspect-ratio: 9 / 16; background: #0E2550; }
+    .strip img { width: 100%; height: 100%; object-fit: cover; }
+    .strip figcaption {
+      position: absolute; left: 0; right: 0; bottom: 0; padding: 40px 14px 14px;
+      font-family: var(--round); font-weight: 700; font-size: 17px;
+      background: linear-gradient(transparent, rgba(4, 12, 30, .8));
     }
 
-    /* SECTION */
-    section {
-      max-width: 1080px;
-      margin: 0 auto;
-      padding: 60px 24px;
+    /* ── Study lamps ── */
+    .lamps { background: var(--card); border: 1px solid var(--line); border-radius: 28px; padding: 30px 26px 22px; width: 100%; max-width: 440px; }
+    .lamps-head { display: flex; justify-content: space-between; align-items: baseline; font-weight: 800; color: var(--navy); margin-bottom: 22px; }
+    .lamps-head small { font-weight: 600; color: var(--sub); font-size: 13px; }
+    .lamp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px 10px; }
+    .lamp { text-align: center; font-size: 13px; color: var(--sub); line-height: 1.5; }
+    .lamp i {
+      display: flex; align-items: center; justify-content: center; margin: 0 auto 10px;
+      width: 62px; height: 62px; border-radius: 50%; font-style: normal;
+      font-family: var(--round); font-weight: 900; font-size: 22px; color: var(--sub);
+      background: var(--paper); border: 2px solid var(--line);
     }
-    .section-label {
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: .06em;
-      text-transform: uppercase;
-      color: var(--indigo);
-      margin-bottom: 10px;
-    }
-    .section-title {
-      font-size: clamp(26px, 4vw, 38px);
-      font-weight: 800;
-      margin-bottom: 12px;
-    }
-    .section-sub {
-      font-size: 16px;
-      color: var(--sub);
-      max-width: 520px;
-      margin-bottom: 48px;
-    }
+    .lamp b { display: block; color: var(--text); font-size: 14px; }
+    .lamp.on i { background: #FFE9A8; border-color: var(--sun); color: var(--navy); box-shadow: 0 0 0 9px rgba(255, 185, 59, .2), 0 0 34px 8px rgba(255, 185, 59, .5); }
+    .lamp.rest i { background: var(--sun-soft); border-color: #F0D9A3; color: #8A6A1F; }
+    .lamp.cheer i { animation: cheer 3.2s ease-in-out infinite; }
+    @keyframes cheer { 50% { box-shadow: 0 0 0 16px rgba(255, 185, 59, .16), 0 0 54px 16px rgba(255, 185, 59, .6); } }
+    @media (prefers-reduced-motion: reduce) { .lamp.cheer i { animation: none; } }
+    .lamps-foot { margin-top: 22px; padding-top: 14px; border-top: 1px solid var(--line); font-size: 12.5px; color: var(--sub); }
+    .quote { font-family: var(--round); font-weight: 900; font-size: 22px; color: var(--navy); margin-top: 22px; }
 
-    /* FEATURES GRID */
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 20px;
-    }
-    .feature-card {
-      background: var(--card);
-      border-radius: var(--radius);
-      padding: 28px;
-      box-shadow: 0 2px 12px rgba(0,0,0,.05);
-      transition: transform .2s, box-shadow .2s;
-      border: 1px solid rgba(79,70,229,.06);
-    }
-    .feature-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 32px rgba(79,70,229,.12);
-    }
-    .feature-icon {
-      width: 52px; height: 52px;
-      border-radius: 16px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 24px;
-      margin-bottom: 18px;
-    }
-    .feature-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
-    .feature-card p { font-size: 14px; color: var(--sub); line-height: 1.7; }
+    /* ── Records ── */
+    .trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px; margin-top: 48px; }
+    .trio figure { display: flex; flex-direction: column; align-items: center; }
+    .trio .phone { --w: 240px; }
+    .trio figcaption { margin-top: 24px; max-width: 250px; }
+    .trio h3 { font-size: 20px; font-weight: 700; }
+    .trio p { font-size: 15px; color: var(--sub); line-height: 1.75; margin-top: 4px; }
 
-    /* HOW IT WORKS */
-    .steps {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 24px;
-    }
-    .step {
-      background: var(--card);
-      border-radius: var(--radius);
-      padding: 28px 24px 24px;
-      border: 1px solid rgba(79,70,229,.08);
-    }
-    .step-number {
-      width: 36px; height: 36px;
-      background: var(--indigo);
-      color: #fff;
-      border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 15px;
-      font-weight: 800;
-      margin-bottom: 16px;
-    }
-    .step h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
-    .step p { font-size: 14px; color: var(--sub); line-height: 1.6; }
+    /* ── Everything else ── */
+    .more { background: var(--card); border-block: 1px solid var(--line); }
+    .more-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 34px 48px; margin-top: 36px; }
+    .more-list h3 { font-size: 19px; font-weight: 700; padding-bottom: 8px; margin-bottom: 8px; border-bottom: 3px solid var(--c, var(--sun)); display: inline-block; }
+    .more-list p { font-size: 15px; color: var(--sub); line-height: 1.85; }
 
-    /* CTA */
-    .cta-section {
-      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
-      border-radius: var(--radius);
-      padding: 60px 40px;
-      text-align: center;
-    }
-    .cta-section h2 {
-      font-size: clamp(28px, 4vw, 40px);
-      font-weight: 800;
-      color: #fff;
-      margin-bottom: 14px;
-    }
-    .cta-section p {
-      font-size: 16px;
-      color: rgba(255,255,255,.8);
-      margin-bottom: 32px;
-    }
-    .btn-white {
-      background: #fff;
-      color: var(--indigo);
-      border: none;
-      border-radius: 14px;
-      padding: 14px 32px;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-      text-decoration: none;
-      transition: transform .15s;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .btn-white:hover { transform: translateY(-2px); }
+    /* ── 揪筆記 ── */
+    .jn { background: #F5F2EB; border-radius: 34px; padding: 52px 56px 0; display: grid; grid-template-columns: 1.1fr .9fr; gap: 40px; overflow: hidden; }
+    .jn-text { padding-bottom: 52px; align-self: center; }
+    .jn-brand { display: flex; align-items: center; gap: 12px; font-weight: 800; color: #17171F; font-size: 17px; }
+    .jn-brand img { width: 46px; height: 46px; border-radius: 12px; }
+    .jn h2 { color: #17171F; font-family: "Noto Serif TC", "Songti TC", serif; }
+    .jn .body { color: #6B6A73; }
+    .jn-links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
+    .jn-links a { text-decoration: none; font-weight: 700; font-size: 15px; padding: 12px 22px; border-radius: 999px; }
+    .jn-links .go { background: #FF5B3A; color: #fff; }
+    .jn-links .alt { color: #17171F; border: 1.5px solid #17171F; }
+    .jn .phone { --w: 290px; margin: 0 auto -150px; background: #0E0E12; box-shadow: 0 24px 50px -18px rgba(23, 23, 31, .4); }
 
-    /* COMING SOON MODAL */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,.5);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      z-index: 999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity .25s;
-    }
-    .modal-overlay.show {
-      opacity: 1;
-      pointer-events: all;
-    }
-    .modal {
-      background: white;
-      border-radius: 28px;
-      padding: 40px 36px;
-      text-align: center;
-      max-width: 340px;
-      width: 90%;
-      transform: scale(.92) translateY(12px);
-      transition: transform .25s;
-      box-shadow: 0 32px 80px rgba(0,0,0,.2);
-    }
-    .modal-overlay.show .modal {
-      transform: scale(1) translateY(0);
-    }
-    .modal-icon {
-      font-size: 52px;
-      margin-bottom: 16px;
-      display: block;
-    }
-    .modal h3 {
-      font-size: 22px;
-      font-weight: 800;
-      color: var(--text);
-      margin-bottom: 10px;
-    }
-    .modal p {
-      font-size: 15px;
-      color: var(--sub);
-      line-height: 1.6;
-      margin-bottom: 28px;
-    }
-    .modal-close {
-      background: var(--indigo);
-      color: white;
-      border: none;
-      border-radius: 14px;
-      padding: 12px 32px;
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: opacity .15s;
-    }
-    .modal-close:hover { opacity: .85; }
+    /* ── Changelog ── */
+    .log { display: grid; grid-template-columns: 1fr 1.1fr; gap: 56px; align-items: start; }
+    .log ol { list-style: none; border-top: 1px solid var(--line); }
+    .log li { display: grid; grid-template-columns: 96px 1fr; gap: 16px; padding: 18px 0; border-bottom: 1px solid var(--line); }
+    .log .ver { font-family: var(--round); font-weight: 900; font-size: 20px; color: var(--navy); font-variant-numeric: tabular-nums; line-height: 1.3; }
+    .log time { display: block; font-family: var(--sans); font-size: 12.5px; font-weight: 600; color: var(--sub); }
+    .log ul { list-style: none; font-size: 15px; color: var(--text); line-height: 1.75; }
+    .log ul li { display: block; padding: 0; border: 0; }
 
-    /* FOOTER */
-    footer {
-      text-align: center;
-      padding: 32px 24px;
-      color: var(--sub);
-      font-size: 14px;
-      border-top: 1px solid rgba(79,70,229,.08);
-    }
+    /* ── Download ── */
+    .get { text-align: center; padding: 30px 0 100px; }
+    .get img { width: 96px; height: 96px; border-radius: 24px; margin: 0 auto 22px; border: 1px solid var(--line); background: #fff; }
+    .get .stores { justify-content: center; margin-top: 28px; }
+    .get .body { margin: 0 auto; }
 
-    /* RESPONSIVE */
-    @media (max-width: 720px) {
-      .hero {
-        grid-template-columns: 1fr;
-        padding: 48px 20px 40px;
-        gap: 40px;
-        text-align: center;
-      }
-      .hero p { margin: 0 auto 32px; }
-      .hero-buttons { justify-content: center; }
-      .hero-visual { order: -1; }
-      .float-right, .float-left { display: none; }
-      .phone { width: 200px; }
-      .nav-links { display: none; }
-      .cta-section { padding: 40px 24px; }
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; padding: 44px 0 30px; gap: 48px; }
+      .spark { right: -8px; top: -30px; width: 36px; height: 36px; }
+      .row, .log { grid-template-columns: 1fr; gap: 40px; }
+      .row.flip .shot { order: 0; }
+      section { padding: 60px 0; }
+      .strip { grid-auto-flow: column; grid-template-columns: none; grid-auto-columns: 46%; overflow-x: auto; scroll-snap-type: x mandatory; margin-inline: -20px; padding-inline: 20px; }
+      .strip figure { scroll-snap-align: center; }
+      .trio { grid-template-columns: 1fr; gap: 48px; }
+      .more-list { grid-template-columns: 1fr 1fr; }
+      .jn { grid-template-columns: 1fr; padding: 40px 26px 0; border-radius: 26px; }
+      .jn-text { padding-bottom: 8px; }
+    }
+    @media (max-width: 560px) {
+      .hero h1 { font-size: clamp(30px, 9.4vw, 40px); }
+      .spark { display: none; }
+      .hero-art { overflow: hidden; margin-inline: -20px; padding-inline: 20px; }
+      .hero-art .phone.back { --w: 180px; top: 60px; }
+      .hero-art .phone.front { --w: 220px; margin-left: 96px; }
+      .modes, .more-list { grid-template-columns: 1fr; }
+      .tally { gap: 14px 28px; }
+      .tally b { font-size: 28px; }
+      .log li { grid-template-columns: 76px 1fr; }
     }
   </style>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@900&display=swap&text=%E7%AD%86%E8%A8%98%EF%BC%8C%E4%BA%A4%E7%B5%A6%E6%8F%AA%E3%80%82" />
 </head>
 <body>
 
-<!-- COMING SOON MODAL -->
-<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
-  <div class="modal">
-    <span class="modal-icon">🚀</span>
-    <h3>即將上線</h3>
-    <p>揪讀書正在審核中，<br/>敬請期待！</p>
-    <button class="modal-close" onclick="closeModalBtn()">好的，期待中</button>
-  </div>
-</div>
-
-<!-- NAV -->
 <nav>
   <div class="nav-inner">
-    <a class="nav-logo" href="#">
-      <img src="read_or_not.png" alt="揪讀書" />
+    <a class="nav-logo" href="/">
+      <img src="/read_or_not.png" alt="" />
       揪讀書
     </a>
     <ul class="nav-links">
-      <li><a href="#features">功能</a></li>
-      <li><a href="#how">使用方式</a></li>
-      <li><a href="https://apps.apple.com/tw/app/%E6%8F%AA%E8%AE%80%E6%9B%B8/id6775822757" target="_blank" rel="noopener">App Store</a></li>
-      <li><a href="https://play.google.com/store/apps/details?id=com.readornot.app" target="_blank" rel="noopener">Google Play</a></li>
+      <li><a href="#groups">揪團</a></li>
+      <li><a href="#timer">計時</a></li>
+      <li><a href="#lamp">自習燈</a></li>
+      <li><a href="#records">紀錄</a></li>
+      <li><a href="/joinnote/">揪筆記</a></li>
+      <li><a class="nav-cta" href="#download">下載</a></li>
     </ul>
   </div>
 </nav>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-text">
-    <div class="hero-badge"><span>📚</span> 讀書揪團平台</div>
-    <h1>找到你的<br/><em>讀書夥伴</em></h1>
-    <p>揪讀書讓你輕鬆揪人一起讀書、同步計時、番茄鐘專注、離線也能讀，讓讀書不再孤單。</p>
-    <div class="hero-buttons">
-      <a href="https://apps.apple.com/tw/app/%E6%8F%AA%E8%AE%80%E6%9B%B8/id6775822757" target="_blank" rel="noopener" class="btn-appstore">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-        <div class="btn-appstore-text">
-          <span class="btn-appstore-sub">在 App Store</span>
-          <span class="btn-appstore-main">下載</span>
-        </div>
-      </a>
-      <a href="https://play.google.com/store/apps/details?id=com.readornot.app" target="_blank" rel="noopener" class="btn-googleplay">
-        <svg width="22" height="22" viewBox="0 0 40 40"><path fill="none" d="M0,0h40v40H0V0z"/><g><path d="M19.7,19.2L4.3,35.3c0,0,0,0,0,0c0.5,1.7,2.1,3,4,3c0.8,0,1.5-0.2,2.1-0.6l0,0l17.4-9.9L19.7,19.2z" fill="#EA4335"/><path d="M35.3,16.4L35.3,16.4l-7.5-4.3l-8.4,7.4l8.5,8.3l7.5-4.2c1.3-0.7,2.2-2.1,2.2-3.6C37.5,18.5,36.6,17.1,35.3,16.4z" fill="#FBBC04"/><path d="M4.3,4.7C4.2,5,4.2,5.4,4.2,5.8v28.5c0,0.4,0,0.7,0.1,1.1l16-15.7L4.3,4.7z" fill="#4285F4"/><path d="M19.8,20l8-7.9L10.5,2.3C9.9,1.9,9.1,1.7,8.3,1.7c-1.9,0-3.6,1.3-4,3c0,0,0,0,0,0L19.8,20z" fill="#34A853"/></g></svg>
-        <div class="btn-googleplay-text">
-          <span class="btn-googleplay-sub">在 Google Play</span>
-          <span class="btn-googleplay-main">下載</span>
-        </div>
-      </a>
-      <a href="#features" class="btn-secondary">了解功能</a>
-    </div>
-  </div>
-  <div class="hero-visual">
-    <div class="phone">
-      <div class="phone-screen">
-        <div class="phone-status">
-          <span>9:41</span><span>●●●</span>
-        </div>
-        <div class="phone-content">
-          <div class="mock-timer-wrap" onclick="toggleTimer()">
-            <svg class="mock-timer-svg" viewBox="0 0 120 120">
-              <circle class="mock-timer-track" cx="60" cy="60" r="50"/>
-              <circle class="mock-timer-arc" id="timerArc" cx="60" cy="60" r="50"/>
-            </svg>
-            <div class="mock-timer-inner">
-              <div class="mock-time" id="timerDisplay">00:00</div>
-              <div class="mock-label" id="timerLabel">讀書中</div>
-            </div>
-          </div>
-          <div class="mock-card">
-            <div class="mock-card-title">一起讀書的夥伴</div>
-            <div class="mock-avatars">
-              <div class="mock-avatar" style="background:#4f46e5">小</div>
-              <div class="mock-avatar" style="background:#f97316">明</div>
-              <div class="mock-avatar" style="background:#22c55e">芸</div>
-              <div class="mock-avatar" style="background:#8b5cf6">君</div>
-            </div>
-          </div>
-          <div class="mock-card">
-            <div class="mock-card-title">多益考試衝刺團</div>
-            <div style="font-size:10px;color:#4f46e5;font-weight:700;">線上讀書中</div>
-          </div>
-          <button class="mock-btn" id="mockBtn" onclick="toggleTimer()">暫停休息</button>
-        </div>
+<main>
+<div class="wrap">
+  <header class="hero">
+    <div>
+      <p class="kicker">讀書揪團 App · iOS / Android</p>
+      <h1>
+        <span class="nw">讓一個人讀書，</span><br />
+        <span class="nw">不再<mark>只是一個人</mark>。</span>
+        <svg class="spark" viewBox="0 0 44 44" fill="none" stroke="#FFB93B" stroke-width="5.5" stroke-linecap="round" aria-hidden="true"><path d="M12 6l5 12M30 12l-8 9M38 28l-12 2" /></svg>
+      </h1>
+      <p class="lead">找一個讀書團，按下計時器，你的自習燈就亮了。朋友看得到你正在專注，你也看得到他們還在讀。</p>
+      <div class="stores">
+        <a class="store" href="https://apps.apple.com/tw/app/%E6%8F%AA%E8%AE%80%E6%9B%B8/id6775822757" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          <span><small>下載於</small><b>App Store</b></span>
+        </a>
+        <a class="store" href="https://play.google.com/store/apps/details?id=com.readornot.app" target="_blank" rel="noopener">
+          <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M19.7,19.2L4.3,35.3c0.5,1.7,2.1,3,4,3c0.8,0,1.5-0.2,2.1-0.6l17.4-9.9L19.7,19.2z" fill="#EA4335"/><path d="M35.3,16.4l-7.5-4.3l-8.4,7.4l8.5,8.3l7.5-4.2c1.3-0.7,2.2-2.1,2.2-3.6C37.5,18.5,36.6,17.1,35.3,16.4z" fill="#FBBC04"/><path d="M4.3,4.7C4.2,5,4.2,5.4,4.2,5.8v28.5c0,0.4,0,0.7,0.1,1.1l16-15.7L4.3,4.7z" fill="#4285F4"/><path d="M19.8,20l8-7.9L10.5,2.3C9.9,1.9,9.1,1.7,8.3,1.7c-1.9,0-3.6,1.3-4,3L19.8,20z" fill="#34A853"/></svg>
+          <span><small>下載於</small><b>Google Play</b></span>
+        </a>
+      </div>
+
+      <div class="tally" aria-label="揪讀書目前的使用數字">
+        <div><b id="statUsers">2,520</b><span>位讀書人</span></div>
+        <div><b id="statGroups">220</b><span>個讀書團</span></div>
+        <div><b id="statHours">17,363</b><span>小時，大家一起讀的</span></div>
+        <p class="tally-note">這些是 App 裡的即時數字，每次打開這一頁都會更新。</p>
       </div>
     </div>
-    <div class="floating-card float-right">
-      <div class="streak-badge">🔥 17</div>
-      <div class="float-sub" style="margin-top:4px;">連續打卡天數</div>
+
+    <div class="hero-art">
+      <div class="phone back"><img src="/shots/groups.webp" alt="揪讀書的揪團頁面：依科目列出讀書團，顯示時間與人數" width="660" height="1434" /></div>
+      <div class="phone front"><img src="/shots/timer-ready.webp" alt="揪讀書的計時頁面：選科目後開始讀書，下方有番茄鐘、離線模式、縮時攝影與翻面計時" width="660" height="1434" /></div>
     </div>
-    <div class="floating-card float-left">
-      <div class="float-tag">✅ 打卡成功</div>
-      <div class="float-sub">今日讀書 2.5 小時</div>
+  </header>
+</div>
+
+<section id="groups">
+  <div class="wrap row">
+    <div class="shot">
+      <div class="phone"><img src="/shots/groups.webp" alt="揪團頁面，可用線上、實體、附近等條件篩選讀書團" width="660" height="1434" loading="lazy" /></div>
+    </div>
+    <div>
+      <span class="tag" style="--c: var(--blue)"><i></i>揪團</span>
+      <h2>準備同一場考試的人，<br />都在這裡。</h2>
+      <p class="body">告訴揪讀書你的目標考試、科目和學校，最適合你的讀書團會排在最前面。學測、多益、研究所、國考，或只是想把這學期的微積分讀完，都找得到伴。</p>
+      <ul class="points">
+        <li><b>線上或實體都行。</b>實體團可以用距離篩選，看看附近誰在讀。</li>
+        <li><b>公開或私人。</b>自己開一團，把揪團連結丟給朋友就能加入。</li>
+        <li><b>每一團都有聊天室。</b>傳文字、圖片、回覆訊息，約時間一起開讀。</li>
+        <li><b>卡住了就問 @read.ai。</b>在聊天室標注它，直接問讀書上的問題。</li>
+      </ul>
     </div>
   </div>
 </section>
 
-<!-- FEATURES -->
-<section id="features">
-  <div class="section-label">功能介紹</div>
-  <div class="section-title">讀書，不再一個人</div>
-  <p class="section-sub">從揪團到計時，揪讀書完整覆蓋你的讀書流程。</p>
-  <div class="features-grid">
-    <div class="feature-card">
-      <div class="feature-icon" style="background:#eef2ff;">📖</div>
-      <h3>讀書團揪人</h3>
-      <p>建立線上或實體讀書團，設定科目、時間、人數上限，公開或私人皆可。支援地圖距離篩選，找到附近的讀書夥伴。</p>
+<section id="timer" style="padding-top: 20px">
+  <div class="wrap row flip">
+    <div class="shot">
+      <div class="phone"><img src="/shots/timer.webp" alt="讀書計時進行中，下方顯示自習室與最近的讀書紀錄" width="660" height="1434" loading="lazy" /></div>
     </div>
-    <div class="feature-card">
-      <div class="feature-icon" style="background:#fff7ed;">⏱</div>
-      <h3>同步讀書計時</h3>
-      <p>個人計時器與讀書團同步進行，清楚顯示已進行時間、剩餘時間，休息時自動切換橘色倒計時，累積淨讀書時間。</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon" style="background:#f0fdf4;">💬</div>
-      <h3>群組聊天室</h3>
-      <p>每個讀書團都有專屬聊天室，支援文字、圖片、回覆訊息，讀書中也能保持溝通。</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon" style="background:#fdf4ff;">🔔</div>
-      <h3>Dynamic Island 動態島</h3>
-      <p>讀書計時以 Live Activity 顯示在動態島與通知欄，離開 app 也能隨時掌握讀書進度。</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon" style="background:#fff1f2;">📅</div>
-      <h3>每日打卡 & 連續紀錄</h3>
-      <p>每日打卡記錄讀書狀況，追蹤連續打卡天數與累積時數，可拍照留下讀書時光。</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon" style="background:#eef2ff;">🏆</div>
-      <h3>排行榜 & 出席率</h3>
-      <p>讀書團內排行榜激勵彼此，成員出席率透明公開，讀書認真程度一目了然，還可切換今日、本週、本月排名。</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon" style="background:#fff7ed;">🍅</div>
-      <h3>番茄鐘模式</h3>
-      <p>自訂工作與休息時間，自動切換階段，讀書時自動鎖定 App、休息時自動解鎖，專注更有節奏。</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon" style="background:#f0fdf4;">🔒</div>
-      <h3>讀書鎖定</h3>
-      <p>計時讀書時可鎖定容易分心的 App，搭配同播共享邀請好友一起聽歌讀書，個人或揪團都能用。</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon" style="background:#fdf4ff;">📡</div>
-      <h3>離線模式</h3>
-      <p>沒有網路也能開始讀書計時，恢復連線後自動同步紀錄，不怕訊號不穩打斷讀書節奏。</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon" style="background:#fff1f2;">🎬</div>
-      <h3>縮時攝影</h3>
-      <p>讀書過程自動錄製縮時影片，錄製時可懸浮預覽鏡頭畫面，結束後一鍵分享讀書成果。</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon" style="background:#eef2ff;">📱</div>
-      <h3>主畫面小工具</h3>
-      <p>讀書計時、連續打卡、本週時數、好友動態、快速開始，5 種小工具自由加到主畫面，還可自訂 8 種主題色。</p>
+    <div>
+      <span class="tag" style="--c: var(--sun)"><i></i>計時</span>
+      <h2>選好科目，按下開始。</h2>
+      <p class="body">讀書和休息的時間分開算，結束後留下的是真正坐在書桌前的時數。想怎麼讀，計時器都能配合。</p>
+      <dl class="modes">
+        <div><dt>番茄鐘</dt><dd>自訂讀書和休息的長度，時間到了自動切換。</dd></div>
+        <div><dt>翻面計時</dt><dd>手機螢幕朝下蓋在桌上才開始算，拿起來就暫停。</dd></div>
+        <div><dt>讀書鎖定</dt><dd>計時的時候鎖住會讓你分心的 App，休息時自動解鎖。</dd></div>
+        <div><dt>離線模式</dt><dd>圖書館地下室沒訊號也能計時，連上網路再同步。</dd></div>
+        <div><dt>縮時攝影</dt><dd>把今天讀書的樣子錄成一支縮時影片，讀完直接分享。</dd></div>
+        <div><dt>同播共享</dt><dd>邀朋友聽同一首歌，一個人或整團讀書都能用。</dd></div>
+        <div><dt>動態島</dt><dd>離開 App，鎖定畫面和動態島上還是看得到計時。</dd></div>
+        <div><dt>倒數卡片</dt><dd>期中考、多益、學測還剩幾天，放在計時器上面提醒你。</dd></div>
+      </dl>
     </div>
   </div>
 </section>
 
-<!-- HOW IT WORKS -->
-<section id="how" style="background: var(--indigo-light); border-radius: var(--radius); padding: 60px 40px; max-width: 1080px; margin: 0 auto;">
-  <div class="section-label">使用方式</div>
-  <div class="section-title">四步驟開始讀書</div>
-  <p class="section-sub">不到兩分鐘，從下載到開始讀書。</p>
-  <div class="steps">
-    <div class="step">
-      <div class="step-number">1</div>
-      <h3>建立帳號</h3>
-      <p>填入名字、科目、考試目標，讓大家更了解你的讀書方向。</p>
-    </div>
-    <div class="step">
-      <div class="step-number">2</div>
-      <h3>搜尋或建立讀書團</h3>
-      <p>依科目、線上/實體、距離篩選讀書團，或自己開一個邀請朋友。</p>
-    </div>
-    <div class="step">
-      <div class="step-number">3</div>
-      <h3>開始讀書計時</h3>
-      <p>輸入今日科目，按下開始。動態島即時顯示，隨時掌握讀書進度。</p>
-    </div>
-    <div class="step">
-      <div class="step-number">4</div>
-      <h3>每日打卡記錄</h3>
-      <p>結束後打卡，累積連續天數，查看個人統計與排行榜。</p>
+<section class="scenes" id="scenes">
+  <div class="wrap">
+    <span class="tag"><i></i>讀書場景</span>
+    <h2>今天想在哪裡讀？</h2>
+    <p class="body">計時畫面可以換成會動的場景。雨打在窗上、飛機飛過雲層、壽司一盤盤轉過去，陪你把這一段讀完。</p>
+    <div class="strip">
+      <figure><img src="/scenes/rain.webp" alt="雨滴打在窗戶上的夜景" width="540" height="960" loading="lazy" /><figcaption>雨滴窗</figcaption></figure>
+      <figure><img src="/scenes/plane.webp" alt="從飛機窗戶看出去的雲層與地平線" width="540" height="960" loading="lazy" /><figcaption>飛機窗戶</figcaption></figure>
+      <figure><img src="/scenes/lanterns.webp" alt="老街建築之間的夜空" width="540" height="960" loading="lazy" /><figcaption>天燈</figcaption></figure>
+      <figure><img src="/scenes/sushi.webp" alt="動物師傅顧店的迴轉壽司吧" width="540" height="960" loading="lazy" /><figcaption>迴轉壽司</figcaption></figure>
+      <figure><img src="/scenes/meteors.webp" alt="山稜線上的銀河夜空" width="540" height="960" loading="lazy" /><figcaption>流星</figcaption></figure>
     </div>
   </div>
 </section>
 
-<!-- CTA -->
-<section id="download" style="padding-bottom: 80px;">
-  <div class="cta-section">
-    <h2>準備好讀書了嗎？</h2>
-    <p>加入揪讀書，找到你的讀書夥伴。</p>
-    <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap;">
-      <a href="https://apps.apple.com/tw/app/%E6%8F%AA%E8%AE%80%E6%9B%B8/id6775822757" target="_blank" rel="noopener" class="btn-white">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="#4f46e5"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-        在 App Store 下載
+<section id="lamp">
+  <div class="wrap row">
+    <div class="shot">
+      <div class="lamps" role="img" aria-label="自習室示意圖：六位朋友的自習燈，三位專注中、一位休息中、兩位離線">
+        <div class="lamps-head">自習室 <small>3 位朋友正在專注</small></div>
+        <div class="lamp-grid">
+          <div class="lamp on cheer"><i>芸</i><b>小芸</b>專注 1 小時 12 分</div>
+          <div class="lamp on"><i>K</i><b>Kai</b>專注 48 分</div>
+          <div class="lamp on"><i>安</i><b>安安</b>專注 25 分</div>
+          <div class="lamp rest"><i>哲</i><b>阿哲</b>休息中</div>
+          <div class="lamp"><i>M</i><b>Mia</b>離線</div>
+          <div class="lamp"><i>宇</i><b>小宇</b>離線</div>
+        </div>
+        <p class="lamps-foot">示意畫面，名字為虛構。</p>
+      </div>
+    </div>
+    <div>
+      <span class="tag" style="--c: var(--sun)"><i></i>自習燈</span>
+      <h2>你開始讀，燈就亮了。</h2>
+      <p class="body">一開始計時，你的自習燈會亮起來，好友和團員在自習室裡都看得到。休息的時候燈暗一點，離開了就熄掉。</p>
+      <p class="body" style="margin-top: 14px">看到朋友還在讀，可以替他「添光」。對方只會看到一圈柔和的光暈、感覺到輕輕一下震動。沒有通知，也不會打斷他。</p>
+      <p class="quote">陪伴，但不打擾。</p>
+    </div>
+  </div>
+</section>
+
+<section id="records" style="padding-top: 20px">
+  <div class="wrap">
+    <span class="tag" style="--c: var(--mint)"><i></i>紀錄</span>
+    <h2>讀過的每一分鐘，都算數。</h2>
+    <p class="body">每一段計時都會留下紀錄。打卡累積連續天數，在讀書團的排行榜上看今天、這週、這個月誰讀得最久。</p>
+    <div class="trio">
+      <figure>
+        <div class="phone"><img src="/shots/stats.webp" alt="學習回顧頁面：每日讀書時間長條圖、科目分布與每週打卡" width="660" height="1434" loading="lazy" /></div>
+        <figcaption><h3>統計</h3><p>用日、週、月看讀書時數、科目分布和讀書日曆，版面可以自己調整。</p></figcaption>
+      </figure>
+      <figure>
+        <div class="phone"><img src="/shots/recap.webp" alt="上週的讀書回顧卡片，可儲存或分享" width="660" height="1434" loading="lazy" /></div>
+        <figcaption><h3>學習 Recap</h3><p>每週的讀書成果做成一張卡片，有數據、貼圖、照片三種樣式可以分享。</p></figcaption>
+      </figure>
+      <figure>
+        <div class="phone"><img src="/shots/achievements.webp" alt="成就頁面，列出揪團、人際互動、讀書、打卡等類別的成就" width="660" height="1434" loading="lazy" /></div>
+        <figcaption><h3>成就</h3><p>三十多個成就等你解鎖，從「第一次揪」一路到「揪王之王」。</p></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="more">
+  <div class="wrap">
+    <h2 style="margin-top: 0">還有這些</h2>
+    <div class="more-list">
+      <div style="--c: var(--blue)"><h3>主畫面小工具</h3><p>讀書計時、連續打卡、本週時數、好友動態、快速開始、倒數和待辦事項，不用打開 App 也看得到。</p></div>
+      <div style="--c: var(--sun)"><h3>AI 閃卡</h3><p>貼上一段課文，AI 幫你做成閃卡，左右滑動標記記熟了沒。輸入算式，也能一步一步解給你看。</p></div>
+      <div style="--c: var(--mint)"><h3>好友</h3><p>出示或掃描 QR Code 就能加好友。看朋友的打卡動態，戳一下還沒開始讀的人。</p></div>
+      <div style="--c: var(--mint)"><h3>換個顏色</h3><p>主題色自己挑，包含一組莫蘭迪色系，深色模式也有。</p></div>
+      <div style="--c: var(--blue)"><h3>五種語言</h3><p>繁體中文、簡體中文、English、日本語、한국어。</p></div>
+      <div style="--c: var(--sun)"><h3>平板也好用</h3><p>iPad 和 Android 平板上，讀書團和聊天室會變成左右分欄。</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="jn">
+      <div class="jn-text">
+        <div class="jn-brand"><img src="/joinnote/icon.png" alt="" />揪筆記 Join Note</div>
+        <h2>筆記，交給揪筆記。</h2>
+        <p class="body">我們的另一個 App，專門拿來手寫筆記。用揪讀書的帳號直接登入；在揪讀書計時的時候，揪筆記會顯示你正在讀的科目和時間，這段時間寫的筆記也會自動連到那次的讀書紀錄。</p>
+        <div class="jn-links">
+          <a class="go" href="/joinnote/">認識揪筆記</a>
+          <a class="alt" href="https://apps.apple.com/tw/app/id6817834114" target="_blank" rel="noopener">App Store</a>
+          <a class="alt" href="https://play.google.com/store/apps/details?id=com.timhu.joinnote" target="_blank" rel="noopener">Google Play</a>
+        </div>
+      </div>
+      <div class="phone"><img src="/joinnote/shots/zh-Hant/1-desk.webp" alt="揪筆記的桌面：頂端顯示正在讀的科目與時間，下方是隨手寫和最近的筆記" width="660" height="1434" loading="lazy" /></div>
+    </div>
+  </div>
+</section>
+
+<section id="updates" style="padding-top: 20px">
+  <div class="wrap log">
+    <div>
+      <span class="tag" style="--c: var(--mint)"><i></i>更新紀錄</span>
+      <h2><span class="nw">2026 年 6 月上線，</span><br /><span class="nw">更新了 <span id="verCount">18</span> 個版本。</span></h2>
+      <p class="body">每一版改了什麼，App 裡的「設定 → 更新紀錄」都查得到。有想要的功能，<a href="/contact.html">寫信告訴我們</a>。</p>
+    </div>
+    <ol id="changelog">
+      <li><div class="ver">2.4.3<time datetime="2026-10-13">2026/10/13</time></div><ul><li>倒數計時功能新增時間區間</li><li>統計頁面現在可以隨意調整</li><li>調整揪團頁面搜尋的排序</li><li>提升揪團頁面的搜尋速度</li></ul></li>
+      <li><div class="ver">2.4.2<time datetime="2026-10-10">2026/10/10</time></div><ul><li>新增待辦事項小工具</li><li>提升聊天室順暢度</li><li>修復計時上傳與縮時攝影記錄問題</li></ul></li>
+      <li><div class="ver">2.4.1<time datetime="2026-09-26">2026/9/26</time></div><ul><li>修復使用動態背景時無法使用音訊的問題</li><li>新增對日文、韓文的支援</li></ul></li>
+    </ol>
+  </div>
+</section>
+
+<section class="get" id="download">
+  <div class="wrap">
+    <img src="/read_or_not.png" alt="揪讀書 App 圖示" width="96" height="96" />
+    <h2>今天，揪誰一起讀？</h2>
+    <p class="body">iPhone、iPad 和 Android 都能免費下載。</p>
+    <div class="stores">
+      <a class="store" href="https://apps.apple.com/tw/app/%E6%8F%AA%E8%AE%80%E6%9B%B8/id6775822757" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+        <span><small>下載於</small><b>App Store</b></span>
       </a>
-      <a href="https://play.google.com/store/apps/details?id=com.readornot.app" target="_blank" rel="noopener" class="btn-white">
-        <svg width="22" height="22" viewBox="0 0 40 40"><path fill="none" d="M0,0h40v40H0V0z"/><g><path d="M19.7,19.2L4.3,35.3c0,0,0,0,0,0c0.5,1.7,2.1,3,4,3c0.8,0,1.5-0.2,2.1-0.6l0,0l17.4-9.9L19.7,19.2z" fill="#EA4335"/><path d="M35.3,16.4L35.3,16.4l-7.5-4.3l-8.4,7.4l8.5,8.3l7.5-4.2c1.3-0.7,2.2-2.1,2.2-3.6C37.5,18.5,36.6,17.1,35.3,16.4z" fill="#FBBC04"/><path d="M4.3,4.7C4.2,5,4.2,5.4,4.2,5.8v28.5c0,0.4,0,0.7,0.1,1.1l16-15.7L4.3,4.7z" fill="#4285F4"/><path d="M19.8,20l8-7.9L10.5,2.3C9.9,1.9,9.1,1.7,8.3,1.7c-1.9,0-3.6,1.3-4,3c0,0,0,0,0,0L19.8,20z" fill="#34A853"/></g></svg>
-        在 Google Play 下載
+      <a class="store" href="https://play.google.com/store/apps/details?id=com.readornot.app" target="_blank" rel="noopener">
+        <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M19.7,19.2L4.3,35.3c0.5,1.7,2.1,3,4,3c0.8,0,1.5-0.2,2.1-0.6l17.4-9.9L19.7,19.2z" fill="#EA4335"/><path d="M35.3,16.4l-7.5-4.3l-8.4,7.4l8.5,8.3l7.5-4.2c1.3-0.7,2.2-2.1,2.2-3.6C37.5,18.5,36.6,17.1,35.3,16.4z" fill="#FBBC04"/><path d="M4.3,4.7C4.2,5,4.2,5.4,4.2,5.8v28.5c0,0.4,0,0.7,0.1,1.1l16-15.7L4.3,4.7z" fill="#4285F4"/><path d="M19.8,20l8-7.9L10.5,2.3C9.9,1.9,9.1,1.7,8.3,1.7c-1.9,0-3.6,1.3-4,3L19.8,20z" fill="#34A853"/></svg>
+        <span><small>下載於</small><b>Google Play</b></span>
       </a>
     </div>
   </div>
 </section>
+</main>
 
-<!-- FOOTER -->
 <footer>
-  <p>© 2026 揪讀書 ReadOrNot &nbsp;·&nbsp; <a href="/privacy.html" style="color:var(--indigo);text-decoration:none;">隱私權政策</a> &nbsp;·&nbsp; <a href="/terms.html" style="color:var(--indigo);text-decoration:none;">服務條款</a> &nbsp;·&nbsp; <a href="/child-safety.html" style="color:var(--indigo);text-decoration:none;">兒童安全標準</a> &nbsp;·&nbsp; <a href="/contact.html" style="color:var(--indigo);text-decoration:none;">聯絡我們</a> &nbsp;·&nbsp; <a href="/joinnote/" style="color:var(--indigo);text-decoration:none;">揪筆記</a></p>
+  <p>© 2026 揪讀書 Read or Not</p>
+  <p>
+    <a href="/privacy.html">隱私權政策</a> ·
+    <a href="/terms.html">服務條款</a> ·
+    <a href="/child-safety.html">兒童安全標準</a> ·
+    <a href="/contact.html">聯絡我們</a> ·
+    <a href="/joinnote/">揪筆記</a>
+  </p>
 </footer>
 
 <script>
-  function showModal() {
-    document.getElementById('modalOverlay').classList.add('show');
-    document.body.style.overflow = 'hidden';
-  }
-  function closeModalBtn() {
-    document.getElementById('modalOverlay').classList.remove('show');
-    document.body.style.overflow = '';
-  }
-  function closeModal(e) {
-    if (e.target === document.getElementById('modalOverlay')) {
-      closeModalBtn();
-    }
-  }
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') closeModalBtn();
-  });
-</script>
+  // The numbers and the changelog come from the same public endpoints the app's About page reads.
+  // What's written in the HTML is the fallback if the request fails.
+  (function () {
+    var API = 'https://readornot-api.fly.dev';
+    var fmt = function (n) { return Math.round(n).toLocaleString('zh-TW'); };
+    var set = function (id, v) { var el = document.getElementById(id); if (el && v > 0) el.textContent = fmt(v); };
 
-<script>
-  let timerSeconds = 0;
-  let paused = false;
-  let interval = null;
-  const circumference = 2 * Math.PI * 50; // 314.16
+    fetch(API + '/admin/public-stats').then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
+      if (!d) return;
+      set('statUsers', d.total_users);
+      set('statGroups', d.total_groups);
+      set('statHours', d.total_study_hours);
+    }).catch(function () {});
 
-  function pad(n) { return String(n).padStart(2, '0'); }
-
-  function formatTime(s) {
-    const h = Math.floor(s / 3600);
-    const m = Math.floor((s % 3600) / 60);
-    const sec = s % 60;
-    if (h > 0) return `${h}:${pad(m)}:${pad(sec)}`;
-    return `${pad(m)}:${pad(sec)}`;
-  }
-
-  function updateArc() {
-    const maxSecs = 3600;
-    const progress = Math.min(timerSeconds / maxSecs, 1);
-    const offset = circumference * (1 - progress);
-    document.getElementById('timerArc').style.strokeDashoffset = offset;
-  }
-
-  function tick() {
-    timerSeconds++;
-    document.getElementById('timerDisplay').textContent = formatTime(timerSeconds);
-    updateArc();
-  }
-
-  function toggleTimer() {
-    const btn = document.getElementById('mockBtn');
-    const label = document.getElementById('timerLabel');
-    const arc = document.getElementById('timerArc');
-    const display = document.getElementById('timerDisplay');
-
-    if (!paused) {
-      // pause
-      clearInterval(interval);
-      interval = null;
-      paused = true;
-      btn.textContent = '繼續讀書';
-      btn.classList.add('paused');
-      label.textContent = '休息中';
-      label.style.color = 'var(--orange)';
-      display.style.color = 'var(--orange)';
-      arc.style.stroke = 'var(--orange)';
-    } else {
-      // resume
-      paused = false;
-      btn.textContent = '暫停休息';
-      btn.classList.remove('paused');
-      label.textContent = '讀書中';
-      label.style.color = '';
-      display.style.color = '';
-      arc.style.stroke = '';
-      interval = setInterval(tick, 1000);
-    }
-  }
-
-  // Auto-start
-  interval = setInterval(tick, 1000);
+    fetch(API + '/app/config').then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
+      var log = d && d.changelog;
+      if (!log || !log.length) return;
+      document.getElementById('verCount').textContent = log.length;
+      var list = document.getElementById('changelog');
+      var items = log.slice(-3).reverse().map(function (e) {
+        var li = document.createElement('li');
+        var ver = document.createElement('div'); ver.className = 'ver'; ver.textContent = e.version;
+        var t = document.createElement('time'); t.dateTime = e.date;
+        var p = String(e.date).split('-'); t.textContent = p.length === 3 ? p[0] + '/' + (+p[1]) + '/' + (+p[2]) : e.date;
+        ver.appendChild(t);
+        var ul = document.createElement('ul');
+        (e.changes || []).slice(0, 5).forEach(function (c) { var i = document.createElement('li'); i.textContent = c; ul.appendChild(i); });
+        li.appendChild(ver); li.appendChild(ul);
+        return li;
+      });
+      list.replaceChildren.apply(list, items);
+    }).catch(function () {});
+  })();
 </script>
 </body>
 </html>

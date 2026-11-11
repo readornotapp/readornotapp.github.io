@@ -19,252 +19,15 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/joinnote/apple-touch-icon.png" />
   <meta name="apple-mobile-web-app-title" content="揪笔记" />
   <meta name="theme-color" content="#F5F2EB" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@700;900&display=swap" />
   <link rel="stylesheet" href="/joinnote/style.css" />
-  <style>
-    .lang{position:relative}
-    .lang summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:6px;font-size:14px;font-weight:600;
-      color:var(--ink);padding:7px 12px;border:1px solid var(--line);border-radius:999px;background:var(--surface)}
-    .lang summary::-webkit-details-marker{display:none}
-    .lang ul{position:absolute;right:0;top:calc(100% + 6px);list-style:none;background:var(--surface);border:1px solid var(--line);
-      border-radius:14px;padding:6px;min-width:140px;box-shadow:0 12px 30px rgba(23,23,31,.12);z-index:200}
-    .lang li a{display:block;padding:8px 12px;border-radius:9px;color:var(--ink);text-decoration:none;font-size:14px}
-    .lang li a:hover,.lang li a[aria-current]{background:var(--paper);color:var(--coral)}
-    .nav-right{display:flex;align-items:center;gap:22px}
-    .lang-note{font-size:13px;color:var(--ink-soft);margin:-28px 0 28px}
-
-    .wrap { max-width: 1080px; margin: 0 auto; padding: 0 16px; }
-
-    /* Hero */
-    .hero {
-      display: grid;
-      grid-template-columns: 1.05fr 1fr;
-      gap: 48px;
-      align-items: center;
-      padding: 72px 0 64px;
-    }
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--coral);
-      letter-spacing: .04em;
-    }
-    .eyebrow .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 0 3px var(--ink); }
-    .hero h1 {
-      font-family: var(--serif);
-      font-size: clamp(40px, 5.4vw, 62px);
-      font-weight: 800;
-      line-height: 1.08;
-      margin: 14px 0 18px;
-      letter-spacing: -.01em;
-    }
-    .hero h1 em { font-style: normal; color: var(--coral); }
-    .hero h1 .nw { white-space: nowrap; }
-    .hero .lead { font-size: 18px; color: var(--ink-soft); line-height: 1.8; max-width: 30em; }
-    .ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 13px 22px;
-      border-radius: 999px;
-      font-weight: 700;
-      font-size: 15px;
-      text-decoration: none;
-      transition: transform .15s, background .15s;
-    }
-    .btn:hover { transform: translateY(-1px); }
-    .btn-ink { background: var(--ink); color: #fff; }
-    .btn-ink:hover { background: var(--coral); }
-    .btn-line { color: var(--ink); border: 1.5px solid var(--ink); }
-    .btn svg { width: 18px; height: 18px; fill: currentColor; }
-
-    /* Quick-ink card (as on the Desk) */
-    .art { position: relative; }
-    .quick {
-      background: var(--ink);
-      border-radius: 34px;
-      padding: 30px 30px 34px;
-      color: #fff;
-      aspect-ratio: 1.25;
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 24px 60px rgba(23, 23, 31, .18);
-    }
-    .quick svg.squiggle { position: absolute; inset: 0; width: 100%; height: 100%; }
-    .quick .squiggle path { stroke-dasharray: 1400; stroke-dashoffset: 1400; animation: draw 2.4s .3s ease-out forwards; }
-    @keyframes draw { to { stroke-dashoffset: 0; } }
-    @media (prefers-reduced-motion: reduce) { .quick .squiggle path { animation: none; stroke-dashoffset: 0; } }
-    .quick .led { position: absolute; top: 30px; right: 32px; width: 16px; height: 16px; border-radius: 50%; background: var(--lime); }
-    .quick .label { position: absolute; left: 32px; bottom: 30px; }
-    .quick .label b { display: block; font-family: var(--serif); font-size: 40px; line-height: 1.1; }
-    .quick .label span { color: rgba(255, 255, 255, .62); font-size: 16px; }
-    .quick .pen {
-      position: absolute;
-      right: 28px;
-      bottom: 28px;
-      width: 68px;
-      height: 68px;
-      border-radius: 50%;
-      background: var(--coral);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .quick .pen svg { width: 30px; height: 30px; }
-
-    .page {
-      position: absolute;
-      left: -26px;
-      top: -36px;
-      width: 44%;
-      background: var(--surface);
-      border-radius: 18px;
-      padding: 16px 16px 20px;
-      box-shadow: 0 16px 40px rgba(23, 23, 31, .14);
-      transform: rotate(-5deg);
-      background-image: repeating-linear-gradient(to bottom, transparent 0 25px, rgba(23, 23, 31, .08) 25px 26px);
-      background-position: 0 34px;
-    }
-    .page b { font-family: var(--serif); font-size: 14px; display: block; margin-bottom: 8px; }
-    .page .hl { display: inline-block; height: 8px; width: 60%; background: var(--lime); border-radius: 4px; margin-bottom: 10px; }
-    .page svg { width: 100%; height: 70px; display: block; }
-
-    /* Sections */
-    section { padding: 64px 0; }
-    .sec-head { max-width: 640px; margin-bottom: 34px; }
-    .sec-head .eyebrow { margin-bottom: 8px; }
-    .sec-head h2 { font-family: var(--serif); font-size: clamp(30px, 4.6vw, 44px); font-weight: 800; line-height: 1.2; }
-    .sec-head p { color: var(--ink-soft); font-size: 16px; margin-top: 10px; line-height: 1.8; }
-
-    .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
-    .feature {
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 24px;
-    }
-    .feature .ic {
-      width: 44px;
-      height: 44px;
-      border-radius: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 21px;
-      background: var(--paper);
-      margin-bottom: 14px;
-    }
-    .feature h3 { font-family: var(--serif); font-size: 19px; margin-bottom: 6px; }
-    .feature p { color: var(--ink-soft); font-size: 15px; line-height: 1.75; }
-    .feature.dark { background: var(--ink); color: #fff; border-color: var(--ink); }
-    .feature.dark p { color: rgba(255, 255, 255, .66); }
-    .feature.dark .ic { background: rgba(255, 255, 255, .1); }
-    .feature.coral { background: var(--coral); color: #fff; border-color: var(--coral); }
-    .feature.coral p { color: rgba(255, 255, 255, .85); }
-    .feature.coral .ic { background: rgba(255, 255, 255, .18); }
-
-    .pair {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      align-items: stretch;
-    }
-    .pair .panel {
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 28px;
-    }
-    .pair .panel h3 { font-family: var(--serif); font-size: 22px; margin-bottom: 8px; }
-    .pair .panel p { color: var(--ink-soft); line-height: 1.8; }
-    .live {
-      margin-top: 18px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      background: var(--ink);
-      color: #fff;
-      border-radius: 999px;
-      padding: 10px 16px;
-      font-size: 14px;
-    }
-    .live .pulse { width: 10px; height: 10px; border-radius: 50%; background: var(--lime); animation: pulse 1.6s infinite; }
-    @keyframes pulse { 50% { opacity: .35; } }
-    .live .time { margin-left: auto; font-variant-numeric: tabular-nums; font-weight: 700; }
-    .sky { margin-top: 18px; height: 150px; border-radius: 18px; background: var(--paper); position: relative; overflow: hidden; }
-    .sky i { position: absolute; border-radius: 50%; border: 3px solid #FFFDF8; box-shadow: 0 3px 0 rgba(23, 23, 31, .08); }
-    .sky .blob { border: 0; box-shadow: none; opacity: .5; }
-
-    .plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; align-items: stretch; }
-    .plan { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px 24px; display: flex; flex-direction: column; }
-    .plan .tag { align-self: flex-start; font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 999px; background: var(--paper); color: var(--ink-soft); margin-bottom: 14px; }
-    .plan h3 { font-family: var(--serif); font-size: 22px; }
-    .plan .price { font-family: var(--serif); font-size: 34px; font-weight: 800; line-height: 1.2; margin-top: 6px; font-variant-numeric: tabular-nums; }
-    .plan .price small { font-family: var(--sans); font-size: 14px; font-weight: 600; color: var(--ink-soft); }
-    .plan .note { font-size: 13px; color: var(--ink-soft); min-height: 1.6em; margin-top: 2px; }
-    .plan ul { list-style: none; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--line); }
-    .plan li { position: relative; padding-left: 22px; font-size: 15px; line-height: 1.6; margin-bottom: 8px; }
-    .plan li::before { content: ""; position: absolute; left: 2px; top: .5em; width: 9px; height: 5px; border-left: 2px solid var(--coral); border-bottom: 2px solid var(--coral); transform: rotate(-45deg); }
-    .plan.dark { background: var(--ink); color: #fff; border-color: var(--ink); }
-    .plan.dark .tag { background: var(--lime); color: var(--ink); }
-    .plan.dark .price small, .plan.dark .note { color: rgba(255, 255, 255, .66); }
-    .plan.dark ul { border-top-color: rgba(255, 255, 255, .16); }
-    .plan.dark li::before { border-color: var(--lime); }
-    .plans-foot { color: var(--ink-soft); font-size: 13.5px; line-height: 1.85; margin-top: 18px; max-width: 62em; }
-    .plans-foot a { color: var(--ink); }
-    @media (max-width: 900px) { .plans { grid-template-columns: 1fr; } }
-
-    .download {
-      background: var(--ink);
-      color: #fff;
-      border-radius: 34px;
-      padding: 48px 32px;
-      text-align: center;
-    }
-    .download h2 { font-family: var(--serif); font-size: clamp(30px, 4.6vw, 44px); font-weight: 800; }
-    .download p { color: rgba(255, 255, 255, .66); margin: 10px auto 26px; max-width: 34em; line-height: 1.8; }
-    .stores { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
-    .store {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 12px 22px;
-      border-radius: 16px;
-      background: rgba(255, 255, 255, .08);
-      border: 1px solid rgba(255, 255, 255, .16);
-      color: #fff;
-      text-decoration: none;
-      text-align: left;
-    }
-    .store svg { width: 24px; height: 24px; fill: #fff; }
-    .store small { display: block; font-size: 11px; color: rgba(255, 255, 255, .6); }
-    .store b { font-size: 16px; }
-    .store.soon { opacity: .7; cursor: default; }
-    .badge { display: inline-block; margin-top: 18px; background: var(--lime); color: var(--ink); font-weight: 700; font-size: 13px; padding: 4px 12px; border-radius: 999px; }
-    .sister { margin-top: 22px; font-size: 14px; color: rgba(255, 255, 255, .6); }
-    .sister a { color: var(--lime); }
-
-    @media (max-width: 900px) {
-      .hero { grid-template-columns: 1fr; padding-top: 40px; gap: 56px; }
-      .features { grid-template-columns: 1fr 1fr; }
-      .pair { grid-template-columns: 1fr; }
-      .page { left: -8px; }
-    }
-    @media (max-width: 560px) {
-      .features { grid-template-columns: 1fr; }
-      .quick { border-radius: 26px; }
-      .quick .label b { font-size: 32px; }
-      .page { display: none; }
-      .download { padding: 40px 18px; border-radius: 26px; }
-    }
-  
-    body{font-family:-apple-system, "PingFang SC", "Noto Sans SC", sans-serif}
-  </style>
+  <link rel="stylesheet" href="/joinnote/home.css" />
+  <style>:root{--serif:"Noto Serif SC", "Songti SC", "SimSun", serif}body{font-family:-apple-system, "PingFang SC", "Noto Sans SC", sans-serif}</style>
 </head>
 <body>
+
 <nav>
   <div class="nav-inner">
     <a class="nav-logo" href="/joinnote/zh-Hans/">
@@ -280,7 +43,7 @@
       <li><a href="/joinnote/zh-Hans/contact.html">联系我们</a></li>
       </ul>
       <details class="lang">
-        <summary aria-label="Language">🌐 简体中文</summary>
+        <summary aria-label="Language">简体中文</summary>
         <ul>
         <li><a href="/joinnote/" hreflang="zh-Hant-TW" lang="zh-Hant-TW" onclick="try{localStorage.setItem('jn.lang','zh-Hant')}catch(e){}">繁體中文</a></li>
         <li><a href="/joinnote/zh-Hans/" hreflang="zh-Hans-CN" lang="zh-Hans-CN" onclick="try{localStorage.setItem('jn.lang','zh-Hans')}catch(e){}" aria-current="true">简体中文</a></li>
@@ -293,113 +56,98 @@
   </div>
 </nav>
 
-
+<main>
 <div class="wrap">
   <header class="hero">
     <div>
-      <span class="eyebrow"><span class="dot"></span>手写笔记 · 揪读书团队出品</span>
+      <p class="kicker">手写笔记 · 揪读书团队出品</p>
       <h1><span class="nw">一碰就开始写，</span><br/><em class="nw">名字之后再想。</em></h1>
       <p class="lead">揪笔记是为读书而生的手写笔记。打开就能写，手写字也搜得到；笔记会自己排成一片星图，还能和读书团一起写同一份笔记。</p>
-      <div class="ctas">
-        <a class="btn btn-ink" href="https://apps.apple.com/cn/app/id6817834114" target="_blank" rel="noopener">App Store 下载</a>
-        <a class="btn btn-line" href="#features">看看功能</a>
+      <div class="stores">
+        <a class="store" href="https://apps.apple.com/tw/app/id6817834114" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg><span><small>下载于</small><b>App Store</b></span></a>
+        <a class="store" href="https://play.google.com/store/apps/details?id=com.timhu.joinnote" target="_blank" rel="noopener"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M19.7,19.2L4.3,35.3c0.5,1.7,2.1,3,4,3c0.8,0,1.5-0.2,2.1-0.6l17.4-9.9L19.7,19.2z" fill="#EA4335"/><path d="M35.3,16.4l-7.5-4.3l-8.4,7.4l8.5,8.3l7.5-4.2c1.3-0.7,2.2-2.1,2.2-3.6C37.5,18.5,36.6,17.1,35.3,16.4z" fill="#FBBC04"/><path d="M4.3,4.7C4.2,5,4.2,5.4,4.2,5.8v28.5c0,0.4,0,0.7,0.1,1.1l16-15.7L4.3,4.7z" fill="#4285F4"/><path d="M19.8,20l8-7.9L10.5,2.3C9.9,1.9,9.1,1.7,8.3,1.7c-1.9,0-3.6,1.3-4,3L19.8,20z" fill="#34A853"/></svg><span><small>下载于</small><b>Google Play</b></span></a>
       </div>
+      <p class="fine">免费下载 · iPhone · iPad · Android</p>
     </div>
-
-    <div class="art" aria-hidden="true">
-      <div class="quick">
-        <svg class="squiggle" viewBox="0 0 500 400" preserveAspectRatio="none">
-          <path d="M-10 170 C 80 230, 170 170, 230 110 C 260 80, 300 55, 296 80 C 292 105, 240 130, 232 112 C 226 95, 300 150, 360 140 C 420 130, 470 105, 520 85"
-                fill="none" stroke="#FF5B3A" stroke-width="9" stroke-linecap="round" />
-        </svg>
-        <span class="led"></span>
-        <div class="label"><b>随手写</b><span>一碰就开始，名字之后再想</span></div>
-        <div class="pen">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 21 L12 4 L17 21"/><path d="M9 14 h6"/></svg>
-        </div>
-      </div>
-      <div class="page">
-        <b>光合作用：暗反应</b>
-        <span class="hl"></span>
-        <svg viewBox="0 0 200 70" fill="none" stroke="#2A2A33" stroke-width="1.6" stroke-linecap="round">
-          <path d="M4 10 q6 -6 12 0 t12 0 q4 -5 9 -1 M44 8 q5 6 10 0 q4 -4 8 2 t10 -2 M84 10 q6 -6 12 0 t10 0"/>
-          <path d="M4 36 q8 -6 14 0 t12 -1 M40 34 q6 6 12 -1 t10 1 q6 -6 10 0 M90 36 q5 -5 10 0 t12 0 q6 -4 10 1"/>
-          <path d="M4 62 q6 -6 12 0 t12 0 M36 60 q6 5 12 -1 t12 1"/>
-          <circle cx="160" cy="44" r="18" stroke="#4A7CF2"/>
-        </svg>
-      </div>
+    <div class="hero-art">
+      <svg class="squiggle" viewBox="0 0 500 400" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M-10 170 C 80 230, 170 170, 230 110 C 260 80, 300 55, 296 80 C 292 105, 240 130, 232 112 C 226 95, 300 150, 360 140 C 420 130, 470 105, 520 85" fill="none" stroke="#FF5B3A" stroke-width="9" stroke-linecap="round" />
+      </svg>
+      <div class="phone"><img src="/joinnote/shots/zh-Hans/1-desk.webp" alt="揪笔记画面" width="660" height="1434" /></div>
     </div>
   </header>
+  <div class="intro">
+    <h2>像纸一样好写，<br/>比纸更好找。</h2>
+    <p>从课堂速记、PDF 讲义标注，到考前整理，都在同一个地方。</p>
+  </div>
 </div>
 
-<section id="features">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="eyebrow">功能</span>
-      <h2>像纸一样好写，<br/>比纸更好找。</h2>
-      <p>从课堂速记、PDF 讲义标注，到考前整理，都在同一个地方。</p>
+<section class="band paper" id="features">
+  <div class="wrap row">
+    <div class="shot"><div class="phone"><img src="/joinnote/shots/zh-Hans/2-editor.webp" alt="手写就像在纸上" width="660" height="1434" loading="lazy" /></div></div>
+    <div class="say">
+      <h2>手写就像在纸上</h2>
+      <p class="sub">荧光笔、图形校正、真正的笔记本纸张</p>
+      <p class="body">写字时没有工具栏，只有一颗墨球：点一下展开笔、荧光笔、橡皮擦、套索和颜色，点两下切换橡皮擦，拖到哪就停哪。</p>
     </div>
-    <div class="features">
-      <div class="feature dark">
-        <div class="ic">✍️</div>
-        <h3>随手写</h3>
-        <p>不用先取名、不用选范本。无限延伸的画布或一页页的纸张，钢笔、荧光笔、套索、图形校正一应俱全。</p>
-      </div>
-      <div class="feature">
-        <div class="ic">🔍</div>
-        <h3>手写字也搜得到</h3>
-        <p>在设备上识别你的手写字，繁简、大小写都能找到，还会直接标出写在哪一行。没有网络也能搜。</p>
-      </div>
-      <div class="feature coral">
-        <div class="ic">✨</div>
-        <h3>星图</h3>
-        <p>每份笔记都是一颗星。揪AI 会把相关的笔记聚成星系，让你一眼看出这学期读了什么。</p>
-      </div>
-      <div class="feature">
-        <div class="ic">📄</div>
-        <h3>PDF、图片与录音</h3>
-        <p>导入讲义直接写在上面；边录音边写，之后点一下笔迹就能听到当时的那一段。</p>
-      </div>
-      <div class="feature">
-        <div class="ic">👥</div>
-        <h3>和读书团一起写</h3>
-        <p>把笔记分享到揪读书的读书团，大家同时写在同一页，看得到彼此的笔迹和头像。</p>
-      </div>
-      <div class="feature">
-        <div class="ic">📶</div>
-        <h3>离线也能用</h3>
-        <p>地铁上、图书馆地下室照样写，连上网络后自动同步。文件夹、标签、书签帮你把笔记放好。</p>
-      </div>
+  </div>
+</section>
+<section class="band lime">
+  <div class="wrap row flip">
+    <div class="shot"><div class="phone"><img src="/joinnote/shots/zh-Hans/3-search.webp" alt="手写字也搜得到" width="660" height="1434" loading="lazy" /></div></div>
+    <div class="say">
+      <h2>手写字也搜得到</h2>
+      <p class="sub">在设备上识别，直接标出写在哪一行</p>
+      <p class="body">在设备上识别你的手写字，繁简、大小写都能找到，还会直接标出写在哪一行。没有网络也能搜。</p>
+    </div>
+  </div>
+</section>
+<section class="band coral">
+  <div class="wrap row">
+    <div class="shot"><div class="phone"><img src="/joinnote/shots/zh-Hans/4-sky.webp" alt="笔记自己排成星图" width="660" height="1434" loading="lazy" /></div></div>
+    <div class="say">
+      <h2>笔记自己排成星图</h2>
+      <p class="sub">揪AI 把相关的笔记聚成星系</p>
+      <p class="body">每份笔记都是一颗星。揪AI 会把相关的笔记聚成星系，让你一眼看出这学期读了什么。</p>
+    </div>
+  </div>
+</section>
+<section class="band ink">
+  <div class="wrap row flip">
+    <div class="shot"><div class="phone"><img src="/joinnote/shots/zh-Hans/5-collab.webp" alt="和读书团一起写" width="660" height="1434" loading="lazy" /></div></div>
+    <div class="say">
+      <h2>和读书团一起写</h2>
+      <p class="sub">实时看到彼此正在写的笔迹</p>
+      <p class="body">把笔记分享到揪读书的读书团，大家同时写在同一页，看得到彼此的笔迹和头像。</p>
+    </div>
+  </div>
+</section>
+
+<section class="more">
+  <div class="wrap">
+    <h2>还有这些</h2>
+    <div class="more-list">
+      <div><h3>随手写</h3><p>不用先取名、不用选范本。无限延伸的画布或一页页的纸张，钢笔、荧光笔、套索、图形校正一应俱全。</p></div>
+      <div><h3>PDF、图片与录音</h3><p>导入讲义直接写在上面；边录音边写，之后点一下笔迹就能听到当时的那一段。</p></div>
+      <div><h3>五种纸张</h3><p>空白、方格、横线、点阵、康奈尔笔记纸。也可以用相机扫描纸本，直接变成能写的笔记本。</p></div>
+      <div><h3>录音逐字稿</h3><p>把录音转成逐字稿，支持中文、英文、日文、韩文。在你的设备上生成，录音不会发送到识别服务。</p></div>
+      <div><h3>回想卡</h3><p>在笔记里圈选一段，揪AI 帮你出题。每天在「找回」复习几张，两分钟就好。</p></div>
+      <div><h3>离线也能用</h3><p>地铁上、图书馆地下室照样写，连上网络后自动同步。文件夹、标签、书签帮你把笔记放好。</p></div>
     </div>
   </div>
 </section>
 
 <section id="study">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="eyebrow">与揪读书</span>
+  <div class="wrap study">
+    <div>
+      <p class="kicker">与揪读书</p>
       <h2>同一个账号，<br/>读书和笔记接在一起。</h2>
-      <p>揪笔记和揪读书共用账号。在揪读书开始计时，揪笔记就知道你正在读书。</p>
+      <p class="body">揪笔记和揪读书共用账号。在揪读书开始计时，揪笔记就知道你正在读书。</p>
     </div>
-    <div class="pair">
-      <div class="panel">
-        <h3>计时同步</h3>
-        <p>揪读书计时中，揪笔记顶端会显示正在读的科目和时间；这段时间写的笔记，会自动连到这次的读书记录。</p>
-        <div class="live" aria-hidden="true"><span class="pulse"></span>正在读 · 生物<span class="time">01:24:36</span></div>
-      </div>
-      <div class="panel">
-        <h3>读过的，都看得见</h3>
-        <p>笔记在星图上依科目聚成星系，越近写的星星越大。回头复习时，从星系点进去就好。</p>
-        <div class="sky" aria-hidden="true">
-          <i class="blob" style="left:8%;top:18%;width:42%;height:78%;background:#FBD3C6"></i>
-          <i class="blob" style="left:54%;top:6%;width:40%;height:70%;background:#DCD6FB"></i>
-          <i style="left:20%;top:34%;width:34px;height:34px;background:#FF7A5C"></i>
-          <i style="left:34%;top:62%;width:24px;height:24px;background:#FFB39E"></i>
-          <i style="left:64%;top:24%;width:40px;height:40px;background:#8E7CF5"></i>
-          <i style="left:80%;top:48%;width:22px;height:22px;background:#B9AEFA"></i>
-          <i style="left:12%;top:66%;width:18px;height:18px;background:#FF9A80"></i>
-        </div>
-      </div>
+    <div class="sync">
+      <h3>计时同步</h3>
+      <p>揪读书计时中，揪笔记顶端会显示正在读的科目和时间；这段时间写的笔记，会自动连到这次的读书记录。</p>
+      <a class="rnr" href="/"><img src="/read_or_not.png" alt="" width="40" height="40" /><span>还没有账号？先下载 揪读书，同一个账号两个 App 都能用。</span></a>
     </div>
   </div>
 </section>
@@ -458,24 +206,17 @@
 <section id="download">
   <div class="wrap">
     <div class="download">
-      <h2>揪笔记已在 App Store 上架</h2>
-      <p>iPhone 与 iPad 现在就能下载，Android 版正在准备上架。已经有揪读书账号的话，直接登录就能使用。</p>
+      <img src="/joinnote/icon.png" alt="" width="88" height="88" />
+      <h2>现在就开始写</h2>
+      <p>iPhone、iPad 与 Android 都能免费下载。已经有揪读书账号的话，直接登录就能使用。</p>
       <div class="stores">
-        <a class="store" href="https://apps.apple.com/cn/app/id6817834114" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24"><path d="M16.37 12.6c-.02-2.2 1.8-3.26 1.88-3.31-1.02-1.5-2.62-1.7-3.19-1.72-1.36-.14-2.65.8-3.34.8-.69 0-1.75-.78-2.88-.76-1.48.02-2.85.86-3.61 2.19-1.54 2.67-.39 6.62 1.11 8.79.73 1.06 1.6 2.25 2.75 2.21 1.1-.04 1.52-.71 2.85-.71 1.33 0 1.71.71 2.88.69 1.19-.02 1.94-1.08 2.67-2.14.84-1.23 1.19-2.42 1.21-2.48-.03-.01-2.32-.89-2.33-3.56zM14.17 6.13c.61-.74 1.02-1.76.91-2.78-.88.04-1.94.59-2.57 1.32-.56.65-1.06 1.69-.93 2.69.98.08 1.98-.5 2.59-1.23z"/></svg>
-          <span><small>立即下载</small><b>App Store</b></span>
-        </a>
-        <span class="store soon">
-          <svg viewBox="0 0 24 24"><path d="M3.6 2.3 13.4 12l-9.8 9.7c-.35-.2-.6-.6-.6-1.1V3.4c0-.5.25-.9.6-1.1zm11.2 8.3 2.6-2.6 3.2 1.8c.9.5.9 1.9 0 2.4l-3.2 1.8-2.6-2.6L14.1 12zM5 1.6l10.9 6.2-2.4 2.4zm8.5 12.2 2.4 2.4L5 22.4z"/></svg>
-          <span><small>即将登上</small><b>Google Play</b></span>
-        </span>
+        <a class="store" href="https://apps.apple.com/tw/app/id6817834114" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg><span><small>下载于</small><b>App Store</b></span></a>
+        <a class="store" href="https://play.google.com/store/apps/details?id=com.timhu.joinnote" target="_blank" rel="noopener"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M19.7,19.2L4.3,35.3c0.5,1.7,2.1,3,4,3c0.8,0,1.5-0.2,2.1-0.6l17.4-9.9L19.7,19.2z" fill="#EA4335"/><path d="M35.3,16.4l-7.5-4.3l-8.4,7.4l8.5,8.3l7.5-4.2c1.3-0.7,2.2-2.1,2.2-3.6C37.5,18.5,36.6,17.1,35.3,16.4z" fill="#FBBC04"/><path d="M4.3,4.7C4.2,5,4.2,5.4,4.2,5.8v28.5c0,0.4,0,0.7,0.1,1.1l16-15.7L4.3,4.7z" fill="#4285F4"/><path d="M19.8,20l8-7.9L10.5,2.3C9.9,1.9,9.1,1.7,8.3,1.7c-1.9,0-3.6,1.3-4,3L19.8,20z" fill="#34A853"/></svg><span><small>下载于</small><b>Google Play</b></span></a>
       </div>
-      <span class="badge">免费下载</span>
-      <p class="sister">还没有账号？先下载 <a href="/">揪读书</a>，同一个账号两个 App 都能用。</p>
     </div>
   </div>
 </section>
-
+</main>
 
 <footer>
   <p>© 2026 揪笔记 JoinNote · 揪读书团队</p>

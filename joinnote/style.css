@@ -55,14 +55,15 @@ nav {
   text-decoration: none;
 }
 .nav-logo img { width: 36px; height: 36px; border-radius: 10px; }
+.lang summary::after { content: ""; width: 6px; height: 6px; margin: -3px 2px 0 4px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(45deg); }
 .nav-links { display: flex; gap: 26px; list-style: none; }
 .nav-links a {
   color: var(--ink-soft);
   text-decoration: none;
   font-size: 15px;
-  font-weight: 500;
+  font-weight: 600;
 }
-.nav-links a:hover { color: var(--coral); }
+.nav-links a:hover { color: var(--ink); }
 
 /* ── Document pages (privacy / terms / child safety) ── */
 .content { max-width: 760px; margin: 0 auto; padding: 56px 16px 80px; }
@@ -202,3 +203,21 @@ footer a:hover { color: var(--coral); }
   .section { padding: 22px 18px; }
   .toc ol { grid-template-columns: 1fr; }
 }
+
+/* ── Language menu ── */
+.nav-right { display: flex; align-items: center; gap: 22px; }
+.lang { position: relative; }
+.lang summary {
+  list-style: none; cursor: pointer; display: flex; align-items: center; gap: 6px;
+  font-size: 14px; font-weight: 600; color: var(--ink);
+  padding: 7px 12px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface);
+}
+.lang summary::-webkit-details-marker { display: none; }
+.lang ul {
+  position: absolute; right: 0; top: calc(100% + 6px); list-style: none;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
+  padding: 6px; min-width: 140px; box-shadow: 0 12px 30px rgba(23, 23, 31, .12); z-index: 200;
+}
+.lang li a { display: block; padding: 8px 12px; border-radius: 9px; color: var(--ink); text-decoration: none; font-size: 14px; }
+.lang li a:hover, .lang li a[aria-current] { background: var(--paper); color: var(--coral); }
+.lang-note { font-size: 13px; color: var(--ink-soft); margin: -28px 0 28px; }
